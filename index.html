@@ -4,11 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Companion AI</title>
-    <!-- Tailwind CSS for styling -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <!-- FontAwesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Marked.js to parse AI Markdown formatting beautifully -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <style>
         /* Custom styles for rendered Markdown inside chat bubbles */
@@ -22,16 +19,13 @@
 </head>
 <body class="bg-[#131314] text-[#e3e3e3] font-sans h-screen flex overflow-hidden">
 
-    <!-- SIDE NAVIGATION -->
     <aside class="w-68 bg-[#1e1f20] h-full flex flex-col justify-between p-4 hidden md:flex transition-all duration-300">
         <div>
-            <!-- Clear / New Chat Button -->
             <button id="clear-btn" class="w-full bg-[#1a1a1c] hover:bg-[#282a2c] text-sm font-medium py-3 px-4 rounded-full flex items-center gap-3 border border-[#444746] transition text-left mb-6 cursor-pointer">
                 <i class="fa-solid fa-plus text-lg text-blue-400"></i>
                 <span>New Chat</span>
             </button>
 
-            <!-- Chat History List placeholder -->
             <div class="space-y-1">
                 <p class="text-xs font-semibold text-[#80868b] px-3 mb-2 uppercase tracking-wider">Recent</p>
                 <div class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm bg-[#2c2d30] text-ellipsis overflow-hidden whitespace-nowrap">
@@ -41,7 +35,6 @@
             </div>
         </div>
 
-        <!-- Bottom Navigation Actions -->
         <div class="space-y-2 border-t border-[#444746] pt-4">
             <div class="flex items-center gap-3 px-3 py-2 text-xs text-[#80868b]">
                 <i class="fa-solid fa-circle text-green-500 animate-pulse"></i>
@@ -50,10 +43,8 @@
         </div>
     </aside>
 
-    <!-- MAIN CHAT INTERFACE -->
     <main class="flex-1 flex flex-col justify-between h-full bg-[#131314] relative">
         
-        <!-- Header -->
         <header class="p-4 flex items-center justify-between border-b border-[#282a2c]">
             <span class="text-lg font-semibold tracking-wide text-blue-400">My Companion AI</span>
             <div class="flex items-center gap-3">
@@ -61,16 +52,13 @@
             </div>
         </header>
 
-        <!-- Chat Feed Area -->
         <section id="chat-feed" class="flex-1 overflow-y-auto p-4 md:p-8 space-y-6 max-w-3xl w-full mx-auto">
-            <!-- Greeting -->
             <div id="greeting" class="text-center my-24 space-y-3">
                 <h1 class="text-4xl font-semibold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">Hello, Developer</h1>
                 <p class="text-[#c4c7c5] text-md">Your production-ready AI environment is active. Ask me anything.</p>
             </div>
         </section>
 
-        <!-- Input Box Area -->
         <footer class="p-4 bg-[#131314]">
             <div class="max-w-3xl w-full mx-auto relative">
                 <form id="chat-form" class="bg-[#1e1f20] rounded-3xl p-4 pr-12 flex items-center border border-transparent focus-within:border-[#444746] transition shadow-lg">
@@ -84,7 +72,6 @@
         </footer>
     </main>
 
-    <!-- App Functionality Logic -->
     <script>
         const chatForm = document.getElementById('chat-form');
         const userInput = document.getElementById('user-input');
@@ -122,8 +109,12 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ history: localChatHistory })
                 });
-                const data = await response.json();
                 
+                if (!response.ok) {
+                    throw new Error(`Server returned status code: ${response.status}`);
+                }
+                
+                const data = await response.json();
                 document.getElementById(loadingId).remove();
                 
                 // 5. Render Response
@@ -136,8 +127,11 @@
                 });
 
             } catch (error) {
-                document.getElementById(loadingId).remove();
-                appendMessage("Failed to reach backend engine. Deployment is still synchronizing or routing.", 'ai');
+                console.error("Tracking App Error Context:", error);
+                if (document.getElementById(loadingId)) {
+                    document.getElementById(loadingId).remove();
+                }
+                appendMessage("Failed to parse response from backend engine. Check developer tools console (F12) for status details.", 'ai');
             }
         });
 
