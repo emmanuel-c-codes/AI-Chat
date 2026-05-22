@@ -1,54 +1,42 @@
 <?php
-// backend.php
-session_start();
+// api/backend.php
 header('Content-Type: application/json');
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Headers: Content-Type');
+header('Access-Control-Allow-Methods: POST, OPTIONS');
 
-// Handle clearing the chat session if requested
-if (isset($_GET['action']) && $_GET['action'] === 'clear') {
-    $_SESSION['chat_history'] = [];
-    echo json_encode(['status' => 'cleared']);
-    exit;
+// Handle preflight OPTIONS requests for CORS safety
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    exit(0);
 }
 
-// Grab raw input from frontend JavaScript
+// Grab incoming payload from JavaScript
 $inputData = json_decode(file_get_contents('php://input'), true);
-$userMessage = $inputData['message'] ?? '';
+$history = $inputData['history'] ?? [];
 
-if (empty($userMessage)) {
-    echo json_encode(['reply' => 'I didn\'t catch that. Please type something!']);
+if (empty($history)) {
+    echo json_encode(['reply' => 'System received an empty conversation stream. Please try again.']);
     exit;
 }
 
-// Initialize chat history array in the session if it doesn't exist yet
-if (!isset($_SESSION['chat_history'])) {
-    $_SESSION['chat_history'] = [];
-}
-
-// Append the new user message to our history array
-$_SESSION['chat_history'][] = [
-    "role" => "user",
-    "parts" => [["text" => $userMessage]]
-];
-
 // -----------------------------------------------------------------
-// CONFIGURATION: Secure production setup using Environment Variables
+// CONFIGURATION: Safe environment lookup for production
 // -----------------------------------------------------------------
-// Safely pulls the key from Vercel's backend environment context so it NEVER leaks on GitHub
-$apiKey = $_ENV['GEMINI_API_KEY'] ?? getenv('GEMINI_API_KEY') ?? ""; 
+$apiKey = $_ENV['GEMINI_API_KEY'] ?? getenv('GEMINI_API_KEY') ?? "";
 
 if (empty($apiKey)) {
-    echo json_encode(['reply' => 'System configuration error: API Key is missing from the server environment settings. Did you forget to add GEMINI_API_KEY to your Vercel Dashboard?']);
+    echo json_encode(['reply' => 'System configuration error: GEMINI_API_KEY environment variable is missing on the host.']);
     exit;
 }
 
 $apiUrl = "https://generativelanguage.googleapis.com/v1/models/gemini-3.5-flash:generateContent?key=" . $apiKey;
 
-// Structure the payload with the COMPLETE history
+// Prepare data payload structure directly for Google's API
 $payload = [
-    "contents" => $_SESSION['chat_history']
+    "contents" => $history
 ];
 
-// Send the request to the API via cURL
+// Execute communication via cURL
 $ch = curl_init($apiUrl);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_POST, true);
@@ -58,34 +46,19 @@ curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
 $response = curl_exec($ch);
 curl_close($ch);
 
-// Parse the reply and update history
 if ($response) {
     $result = json_decode($response, true);
     
-    // Check standard Gemini text response nesting path
     if (isset($result['candidates'][0]['content']['parts'][0]['text'])) {
         $aiReply = $result['candidates'][0]['content']['parts'][0]['text'];
-    } 
-    // Fallback block: If there is an API error message from Google, show it directly for debugging
-    else if (isset($result['error']['message'])) {
-        $aiReply = "API Error: " . $result['error']['message'];
-    } 
-    // General fallback if format is entirely unrecognized
-    else {
-        $aiReply = "Unrecognized response format. Raw API Output: " . substr(strip_tags($response), 0, 150);
-    }
-    
-    // Only save to history if it's a valid non-error response
-    if (!isset($result['error'])) {
-        $_SESSION['chat_history'] = [];
-        $_SESSION['chat_history'][] = [
-            "role" => "model",
-            "parts" => [["text" => $aiReply]]
-        ];
+    } else if (isset($result['error']['message'])) {
+        $aiReply = "Google Engine Error: " . $result['error']['message'];
+    } else {
+        $aiReply = "Unrecognized API payload format.";
     }
     
     echo json_encode(['reply' => $aiReply]);
 } else {
-    echo json_encode(['reply' => 'Backend error: Unable to reach the AI network via cURL.']);
+    echo json_encode(['reply' => 'Serverless timeout: Unable to forward network traffic to the AI engine.']);
 }
 ?>

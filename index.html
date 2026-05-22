@@ -92,47 +92,60 @@
         const greeting = document.getElementById('greeting');
         const clearBtn = document.getElementById('clear-btn');
 
-        // Handle sending messages
+        // Dynamic JavaScript array holding full local conversation memory 
+        let localChatHistory = [];
+
         chatForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const messageText = userInput.value.trim();
             if (!messageText) return;
 
-            // Hide greeting on first interact
             if (greeting) greeting.style.display = 'none';
 
-            // 1. Render user message bubble
+            // 1. Render User Bubble
             appendMessage(messageText, 'user');
             userInput.value = '';
 
-            // 2. Render loading spinner
+            // 2. Track message in historical payload state
+            localChatHistory.push({
+                "role": "user",
+                "parts": [{"text": messageText}]
+            });
+
+            // 3. Show Loading Spinner
             const loadingId = appendMessage('Thinking...', 'loading');
 
-            // 3. Connect to backend endpoint
+            // 4. Send the entire conversation tree to our Vercel PHP function
             try {
                 const response = await fetch('api/backend.php', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ message: messageText })
+                    body: JSON.stringify({ history: localChatHistory })
                 });
                 const data = await response.json();
                 
                 document.getElementById(loadingId).remove();
                 
-                // 4. Render parsed markdown AI response
+                // 5. Render Response
                 appendMessage(data.reply, 'ai');
+
+                // 6. Track model response in local sequence
+                localChatHistory.push({
+                    "role": "model",
+                    "parts": [{"text": data.reply}]
+                });
+
             } catch (error) {
                 document.getElementById(loadingId).remove();
-                appendMessage("Failed to reach backend engine. Verify local server setup and API configurations.", 'ai');
+                appendMessage("Failed to reach backend engine. Deployment is still synchronizing or routing.", 'ai');
             }
         });
 
-        // Handle clearing conversation history context
-        clearBtn.addEventListener('click', async () => {
-            await fetch('backend.php?action=clear');
+        // Wiping local browser conversation state
+        clearBtn.addEventListener('click', () => {
+            localChatHistory = [];
             chatFeed.innerHTML = '';
             if (greeting) greeting.style.display = 'block';
-            alert("Conversation memory reset successfully!");
         });
 
         function appendMessage(text, sender) {
@@ -146,7 +159,6 @@
             } else if (sender === 'loading') {
                 msgDiv.innerHTML = `<div class="text-[#80868b] text-sm flex items-center gap-2"><i class="fa-solid fa-spinner animate-spin text-blue-400"></i> Thinking...</div>`;
             } else {
-                // Parse AI markdown text into beautiful HTML structures
                 const parsedHTML = marked.parse(text);
                 msgDiv.innerHTML = `<div class="prose text-[#e3e3e3] rounded-2xl py-2 max-w-[95%] text-sm leading-relaxed">${parsedHTML}</div>`;
             }
