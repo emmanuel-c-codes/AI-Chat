@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Companion AI</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Marked.js to parse AI Markdown formatting beautifully -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        /* Custom styles for rendered Markdown inside chat bubbles */
+        .prose pre { background: #1a1a1c; padding: 1rem; border-radius: 0.5rem; overflow-x: auto; margin: 0.5rem 0; border: 1px solid #444746; }
+        .prose code { font-family: monospace; color: #f472b6; background: #2c2d30; padding: 0.2rem 0.4rem; border-radius: 0.25rem; }
+        .prose pre code { color: #e3e3e3; background: transparent; padding: 0; }
+        .prose ul { list-style-type: disc; margin-left: 1.5rem; }
+        .prose ol { list-style-type: decimal; margin-left: 1.5rem; }
+        .prose p { margin-bottom: 0.5rem; }
+    </style>
+</head>
+<body class="bg-[#131314] text-[#e3e3e3] font-sans h-screen flex overflow-hidden">
+
+    <!-- SIDE NAVIGATION -->
+    <aside class="w-68 bg-[#1e1f20] h-full flex flex-col justify-between p-4 hidden md:flex transition-all duration-300">
+        <div>
+            <!-- Clear / New Chat Button -->
+            <button id="clear-btn" class="w-full bg-[#1a1a1c] hover:bg-[#282a2c] text-sm font-medium py-3 px-4 rounded-full flex items-center gap-3 border border-[#444746] transition text-left mb-6 cursor-pointer">
+                <i class="fa-solid fa-plus text-lg text-blue-400"></i>
+                <span>New Chat</span>
+            </button>
+
+            <!-- Chat History List placeholder -->
+            <div class="space-y-1">
+                <p class="text-xs font-semibold text-[#80868b] px-3 mb-2 uppercase tracking-wider">Recent</p>
+                <div class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm bg-[#2c2d30] text-ellipsis overflow-hidden whitespace-nowrap">
+                    <i class="fa-regular fa-message text-[#c4c7c5]"></i>
+                    <span id="session-title">Active AI Session</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation Actions -->
+        <div class="space-y-2 border-t border-[#444746] pt-4">
+            <div class="flex items-center gap-3 px-3 py-2 text-xs text-[#80868b]">
+                <i class="fa-solid fa-circle text-green-500 animate-pulse"></i>
+                <span>Connected to Gemini Engine</span>
+            </div>
+        </div>
+    </aside>
+
+    <!-- MAIN CHAT INTERFACE -->
+    <main class="flex-1 flex flex-col justify-between h-full bg-[#131314] relative">
+        
+        <!-- Header -->
+        <header class="p-4 flex items-center justify-between border-b border-[#282a2c]">
+            <span class="text-lg font-semibold tracking-wide text-blue-400">My Companion AI</span>
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-blue-500 to-purple-600 flex items-center justify-center font-bold text-xs text-white">AI</div>
+            </div>
+        </header>
+
+        <!-- Chat Feed Area -->
+        <section id="chat-feed" class="flex-1 overflow-y-auto p-4 md:p-8 space-y-6 max-w-3xl w-full mx-auto">
+            <!-- Greeting -->
+            <div id="greeting" class="text-center my-24 space-y-3">
+                <h1 class="text-4xl font-semibold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">Hello, Developer</h1>
+                <p class="text-[#c4c7c5] text-md">Your production-ready AI environment is active. Ask me anything.</p>
+            </div>
+        </section>
+
+        <!-- Input Box Area -->
+        <footer class="p-4 bg-[#131314]">
+            <div class="max-w-3xl w-full mx-auto relative">
+                <form id="chat-form" class="bg-[#1e1f20] rounded-3xl p-4 pr-12 flex items-center border border-transparent focus-within:border-[#444746] transition shadow-lg">
+                    <input type="text" id="user-input" placeholder="Ask your AI companion..." autocomplete="off" class="w-full bg-transparent border-none outline-none text-[#e3e3e3] placeholder-[#80868b] text-base pr-4">
+                    <button type="submit" class="absolute right-6 text-xl text-[#c4c7c5] hover:text-blue-400 transition cursor-pointer">
+                        <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                </form>
+                <p class="text-center text-xs text-[#80868b] mt-2">Powered by PHP and Gemini Framework architectures.</p>
+            </div>
+        </footer>
+    </main>
+
+    <!-- App Functionality Logic -->
+    <script>
+        const chatForm = document.getElementById('chat-form');
+        const userInput = document.getElementById('user-input');
+        const chatFeed = document.getElementById('chat-feed');
+        const greeting = document.getElementById('greeting');
+        const clearBtn = document.getElementById('clear-btn');
+
+        // Handle sending messages
+        chatForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const messageText = userInput.value.trim();
+            if (!messageText) return;
+
+            // Hide greeting on first interact
+            if (greeting) greeting.style.display = 'none';
+
+            // 1. Render user message bubble
+            appendMessage(messageText, 'user');
+            userInput.value = '';
+
+            // 2. Render loading spinner
+            const loadingId = appendMessage('Thinking...', 'loading');
+
+            // 3. Connect to backend endpoint
+            try {
+                const response = await fetch('api/backend.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: messageText })
+                });
+                const data = await response.json();
+                
+                document.getElementById(loadingId).remove();
+                
+                // 4. Render parsed markdown AI response
+                appendMessage(data.reply, 'ai');
+            } catch (error) {
+                document.getElementById(loadingId).remove();
+                appendMessage("Failed to reach backend engine. Verify local server setup and API configurations.", 'ai');
+            }
+        });
+
+        // Handle clearing conversation history context
+        clearBtn.addEventListener('click', async () => {
+            await fetch('backend.php?action=clear');
+            chatFeed.innerHTML = '';
+            if (greeting) greeting.style.display = 'block';
+            alert("Conversation memory reset successfully!");
+        });
+
+        function appendMessage(text, sender) {
+            const msgId = 'msg-' + Date.now();
+            const msgDiv = document.createElement('div');
+            msgDiv.id = msgId;
+            msgDiv.className = sender === 'user' ? 'flex justify-end' : 'flex justify-start';
+
+            if (sender === 'user') {
+                msgDiv.innerHTML = `<div class="bg-[#2c2d30] text-[#e3e3e3] rounded-2xl px-4 py-2.5 max-w-[85%] text-sm whitespace-pre-wrap">${text}</div>`;
+            } else if (sender === 'loading') {
+                msgDiv.innerHTML = `<div class="text-[#80868b] text-sm flex items-center gap-2"><i class="fa-solid fa-spinner animate-spin text-blue-400"></i> Thinking...</div>`;
+            } else {
+                // Parse AI markdown text into beautiful HTML structures
+                const parsedHTML = marked.parse(text);
+                msgDiv.innerHTML = `<div class="prose text-[#e3e3e3] rounded-2xl py-2 max-w-[95%] text-sm leading-relaxed">${parsedHTML}</div>`;
+            }
+
+            chatFeed.appendChild(msgDiv);
+            chatFeed.scrollTop = chatFeed.scrollHeight;
+            return msgId;
+        }
+    </script>
+</body>
+</html>
