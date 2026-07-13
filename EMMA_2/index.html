@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Learning Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen p-4 md:p-8">
+    <div class="max-w-5xl mx-auto">
+        
+        <header class="mb-10 text-center">
+            <h1 class="text-4xl font-extrabold text-gray-800">Learning Hub</h1>
+            <p class="text-gray-500 mt-2">Curated resources to master new skills.</p>
+        </header>
+
+        <input type="text" id="searchInput" placeholder="Filter by name (e.g. Python, CSS)..." 
+               class="w-full p-4 mb-8 rounded-xl border border-gray-200 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+
+        <div id="resourceGrid" class="grid gap-6 md:grid-cols-3">
+            
+            <div class="bg-white p-6 rounded-lg shadow border-l-4 border-blue-500 hover:shadow-lg transition">
+                <h2 class="font-bold text-xl">Python Crash Course</h2>
+                <p class="text-gray-600 mt-2 text-sm">Best for absolute beginners to understand syntax.</p>
+                <a href="https://www.python.org" target="_blank" class="text-blue-500 mt-4 block font-semibold hover:underline">Start Learning &rarr;</a>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow border-l-4 border-green-500 hover:shadow-lg transition">
+                <h2 class="font-bold text-xl">CSS Flexbox Guide</h2>
+                <p class="text-gray-600 mt-2 text-sm">Master layouts and responsive design easily.</p>
+                <a href="https://css-tricks.com" target="_blank" class="text-blue-500 mt-4 block font-semibold hover:underline">Start Learning &rarr;</a>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow border-l-4 border-purple-500 hover:shadow-lg transition">
+                <h2 class="font-bold text-xl">JavaScript Fundamentals</h2>
+                <p class="text-gray-600 mt-2 text-sm">The core logic for interactive websites.</p>
+                <a href="https://javascript.info" target="_blank" class="text-blue-500 mt-4 block font-semibold hover:underline">Start Learning &rarr;</a>
+            </div>
+
+        </div>
+        
+        <footer class="mt-16 text-center text-gray-400 text-sm">
+            Built with purpose &bull; 2026
+        </footer>
+    </div>
+
+    <script>
+        document.getElementById('searchInput').addEventListener('keyup', function() {
+            let filter = this.value.toLowerCase();
+            let cards = document.querySelectorAll('#resourceGrid > div');
+
+            cards.forEach(card => {
+                let text = card.textContent.toLowerCase();
+                card.style.display = text.includes(filter) ? "" : "none";
+            });
+        });
+    </script>
+</body>
+</html>

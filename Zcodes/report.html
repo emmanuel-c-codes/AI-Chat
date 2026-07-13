@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>File Report | EcoMonitor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 p-6">
+    <div class="max-w-lg mx-auto bg-white p-8 rounded-3xl border shadow-lg">
+        <a href="dashboard.html" class="text-slate-400 text-xs font-bold mb-6 block">← Back to Dashboard</a>
+        <h2 class="text-2xl font-black mb-6">New Environmental Report</h2>
+        <form id="reportForm" class="space-y-4">
+            <input type="text" id="loc" placeholder="Location/Address" required class="w-full p-4 border rounded-xl">
+            <select id="cat" class="w-full p-4 border rounded-xl">
+                <option>Waste Accumulation</option>
+                <option>Flooding</option>
+                <option>Sewage Leak</option>
+            </select>
+            <button type="submit" class="w-full bg-emerald-600 text-white py-4 rounded-xl font-bold">Submit Report</button>
+        </form>
+    </div>
+    <script type="module">
+        import { auth } from './auth.js';
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        
+        const db = getFirestore();
+        document.getElementById('reportForm').onsubmit = async (e) => {
+            e.preventDefault();
+            await addDoc(collection(db, "reports"), {
+                userId: auth.currentUser.uid,
+                location: document.getElementById('loc').value,
+                category: document.getElementById('cat').value,
+                status: "Pending",
+                createdAt: new Date()
+            });
+            window.location.href = "dashboard.html";
+        };
+    </script>
+</body>
+</html>

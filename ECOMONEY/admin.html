@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoMonitor | Government Oversight Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = { darkMode: 'class' }
+        function toggleTheme() { document.documentElement.classList.toggle('dark'); }
+    </script>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors">
+
+    <header class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-6 py-6 shadow-sm">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div>
+                <h1 class="text-2xl font-black">Environmental Incident Dashboard</h1>
+                <p class="text-sm text-gray-500 dark:text-gray-400">Government Oversight & Resolution System</p>
+            </div>
+            <button onclick="toggleTheme()" class="text-xl p-3 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition">
+                <i class="fas fa-adjust"></i>
+            </button>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 py-8">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left min-w-[900px]">
+                    <thead class="bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+                        <tr>
+                            <th class="p-6">Evidence</th>
+                            <th class="p-6">Location</th>
+                            <th class="p-6">Category</th>
+                            <th class="p-6">Issue</th>
+                            <th class="p-6">Status</th>
+                            <th class="p-6 text-right">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="reportList"></tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getFirestore, collection, onSnapshot, query, orderBy, doc, updateDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+
+        const db = getFirestore(initializeApp({
+            apiKey: "AIzaSyBFSIqcnP5U0CMjQZtIS3jK5VTVcHGLPRw",
+            projectId: "client-cc4df",
+            storageBucket: "client-cc4df.firebasestorage.app",
+            messagingSenderId: "600063857476",
+            appId: "1:600063857476:web:9abfe8219251f56e67fd11"
+        }));
+
+        onSnapshot(query(collection(db, "reports"), orderBy("createdAt", "desc")), (snap) => {
+            document.getElementById('reportList').innerHTML = snap.docs.map(doc => {
+                const d = doc.data();
+                const isResolved = d.status === 'Resolved';
+                
+                return `
+                <tr class="border-b border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition">
+                    <td class="p-6">
+                        ${d.image ? 
+                            `<a href="${d.image}" target="_blank">
+                                <img src="${d.image}" class="w-24 h-24 object-cover rounded-lg border dark:border-gray-600 shadow-sm hover:scale-105 transition">
+                             </a>` 
+                            : '<div class="w-24 h-24 flex items-center justify-center bg-gray-100 dark:bg-gray-700 rounded-lg text-[10px] text-gray-400">NO PHOTO</div>'}
+                    </td>
+                    <td class="p-6 font-bold text-slate-700 dark:text-gray-200">${d.location}</td>
+                    <td class="p-6 text-sm font-medium text-blue-600 dark:text-blue-400">${d.category || 'General'}</td>
+                    <td class="p-6 text-gray-600 dark:text-gray-300 max-w-xs truncate">${d.issue}</td>
+                    <td class="p-6">
+                        <span class="px-3 py-1 rounded-full text-xs font-bold ${isResolved ? 'bg-emerald-100 text-emerald-700' : 'bg-orange-100 text-orange-700'}">
+                            ${d.status}
+                        </span>
+                    </td>
+                    <td class="p-6 text-right">
+                        ${!isResolved ? 
+                            `<button onclick="resolve('${doc.id}')" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-blue-700 transition">Mark Resolved</button>` 
+                            : '<span class="text-emerald-600 font-bold text-sm">✓ Resolved</span>'}
+                    </td>
+                </tr>
+            `}).join('');
+        });
+
+        window.resolve = async (id) => {
+            await updateDoc(doc(db, "reports", id), { status: "Resolved" });
+        };
+    </script>
+</body>
+</html>

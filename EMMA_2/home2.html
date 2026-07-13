@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LearningHub | Curated Path to Mastery</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
+    </style>
+</head>
+<body class="bg-[#0a0a0a] text-white font-sans selection:bg-blue-500 selection:text-white">
+
+    <nav class="fixed w-full z-50 px-8 py-6 flex justify-between items-center bg-[#0a0a0a]/80 backdrop-blur-md">
+        <div class="text-2xl font-black tracking-tighter">LEARNING<span class="text-blue-500">HUB</span></div>
+        <a href="index.html" class="px-6 py-2 border border-white/10 hover:border-blue-500 rounded-full text-sm font-medium transition-all hover:bg-blue-600">Launch Hub</a>
+    </nav>
+
+    <header class="min-h-screen flex flex-col items-center justify-center text-center px-6">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-blue-500/30 bg-blue-500/10 text-blue-400 text-xs font-semibold mb-8" data-aos="fade-down">
+            <span>VERSION 2.0 IS LIVE</span>
+        </div>
+        <h1 class="text-6xl md:text-8xl font-black mb-8 tracking-tighter" data-aos="fade-up" data-aos-duration="1000">
+            Build your future,<br><span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">one resource at a time.</span>
+        </h1>
+        <p class="text-gray-400 text-lg md:text-xl max-w-xl mb-10 leading-relaxed" data-aos="fade-up" data-aos-delay="200">
+            The web is infinite. Your learning path shouldn't be. We curate the most high-impact resources so you can spend less time searching and more time coding.
+        </p>
+        <div class="flex gap-4" data-aos="fade-up" data-aos-delay="400">
+            <a href="index.html" class="px-8 py-4 bg-white text-black font-bold rounded-xl hover:bg-gray-200 transition-transform hover:-translate-y-1">Get Started Free</a>
+        </div>
+    </header>
+
+    <section class="max-w-6xl mx-auto px-6 py-24">
+        <div class="grid md:grid-cols-3 gap-6">
+            <div class="glass p-8 rounded-3xl" data-aos="fade-up">
+                <h3 class="text-2xl font-bold mb-4">Precision Curation</h3>
+                <p class="text-gray-400">Every resource is vetted for quality and relevance. We ignore the noise so you find the signal.</p>
+            </div>
+            <div class="glass p-8 rounded-3xl md:col-span-2" data-aos="fade-up" data-aos-delay="100">
+                <h3 class="text-2xl font-bold mb-4">Unified Search Interface</h3>
+                <p class="text-gray-400">Our engine allows you to filter through thousands of potential hours of study to find the exact concept you need in milliseconds.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-12 border-t border-white/5 text-center text-gray-600 text-sm">
+        <p>&copy; 2026 Learning Hub. The developer's choice.</p>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>AOS.init({ once: true, duration: 800 });</script>
+</body>
+</html>

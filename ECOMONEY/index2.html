@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoMonitor Nigeria | National Environmental Intelligence & Governance System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        :root { --primary: #22c55e; --dark: #0f172a; }
+        .glass-morphism { background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .hero-bg { background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=2000&q=80'); background-size: cover; background-position: center; }
+        .feature-box { transition: 0.5s ease-in-out; border: 1px solid #1e293b; }
+        .feature-box:hover { border-color: var(--primary); box-shadow: 0 10px 30px -10px rgba(34, 197, 94, 0.3); }
+        .data-line { border-left: 2px solid var(--primary); }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-200 font-sans leading-relaxed">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-[100] glass-morphism py-6 px-8 flex justify-between items-center">
+        <div class="text-3xl font-black text-green-500 tracking-tighter italic uppercase">EcoMonitor.Ng</div>
+        <div class="hidden lg:flex space-x-10 font-bold uppercase text-xs tracking-widest text-slate-400">
+            <a href="#vision" class="hover:text-green-500 transition">Vision</a>
+            <a href="#technology" class="hover:text-green-500 transition">Tech</a>
+            <a href="#governance" class="hover:text-green-500 transition">Governance</a>
+            <a href="#audit" class="hover:text-green-500 transition">Audit Logs</a>
+        </div>
+        <a href="report.html" class="bg-green-600 px-8 py-3 text-sm font-bold text-white hover:bg-green-500 transition shadow-[0_0_20px_rgba(34,197,94,0.3)]">SECURE LOGIN</a>
+    </nav>
+
+    <!-- Main Hero Section -->
+    <header class="hero-bg min-h-screen flex items-center justify-center pt-20">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <div data-aos="fade-down" class="text-green-500 font-bold tracking-[0.2em] uppercase text-sm mb-6">Federal Environmental Accountability Framework</div>
+            <h1 data-aos="fade-up" class="text-6xl md:text-[120px] font-black mb-10 leading-[0.9]">INTELLIGENT<br><span class="text-transparent bg-clip-text bg-gradient-to-br from-green-400 to-blue-600">ENVIRONMENTAL_</span></h1>
+            <p data-aos="fade-up" data-aos-delay="200" class="text-xl md:text-2xl text-slate-400 max-w-3xl mx-auto mb-16">Deploying AI-driven analytics, TrustChain ledger verification, and real-time geospatial surveillance to sanitize the Nigerian urban landscape.</p>
+            <div data-aos="fade-up" data-aos-delay="400" class="flex flex-col md:flex-row justify-center gap-6">
+                <button class="bg-green-600 text-white px-12 py-6 font-black text-lg tracking-widest uppercase hover:bg-green-500 transition">Execute Deployment</button>
+                <button class="bg-transparent border border-slate-700 px-12 py-6 font-black text-lg tracking-widest uppercase hover:border-green-500 transition">View System Status</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Detailed Tech Section -->
+    <section id="technology" class="py-32 bg-slate-950">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-5xl font-black mb-20 text-center">Core Technical Architecture</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div data-aos="fade-up" class="feature-box p-10 bg-slate-900">
+                    <div class="text-5xl text-green-500 mb-8">🛰️</div>
+                    <h3 class="text-2xl font-bold mb-4">Geospatial Mapping</h3>
+                    <p class="text-slate-400 text-sm">Advanced satellite imagery processing combined with hyper-local GPS coordinates for precise hazard detection.</p>
+                </div>
+                <!-- Card 2 -->
+                <div data-aos="fade-up" data-aos-delay="100" class="feature-box p-10 bg-slate-900">
+                    <div class="text-5xl text-green-500 mb-8">🤖</div>
+                    <h3 class="text-2xl font-bold mb-4">Neural Analytics</h3>
+                    <p class="text-slate-400 text-sm">Deployment of trained neural models to classify waste types and estimate urgency levels for authorities.</p>
+                </div>
+                <!-- Card 3 -->
+                <div data-aos="fade-up" data-aos-delay="200" class="feature-box p-10 bg-slate-900">
+                    <div class="text-5xl text-green-500 mb-8">🔗</div>
+                    <h3 class="text-2xl font-bold mb-4">TrustChain Ledger</h3>
+                    <p class="text-slate-400 text-sm">Immutable reporting system that prevents record tampering, ensuring accountability in government response.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Governance Section (Adding more length) -->
+    <section id="governance" class="py-32 bg-slate-900">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-20 items-center">
+                <div>
+                    <h2 class="text-5xl font-black mb-8">Government Compliance & Oversight</h2>
+                    <p class="text-lg text-slate-400 mb-8">EcoMonitor acts as a transparent bridge between the citizenry and the State Environmental Protection Agencies (SEPA). By providing auditable metrics, we ensure that resources are directed efficiently where they are needed most.</p>
+                    <ul class="space-y-6">
+                        <li class="data-line pl-6"><strong>Real-time Audit Trails:</strong> Every report is time-stamped and verified on the ledger.</li>
+                        <li class="data-line pl-6"><strong>LGA Performance Scoring:</strong> Objective assessment of local government performance.</li>
+                        <li class="data-line pl-6"><strong>Resource Allocation Insights:</strong> Data-backed evidence for budget approvals.</li>
+                    </ul>
+                </div>
+                <div class="bg-slate-950 p-12 border border-slate-800">
+                    <h4 class="text-xs font-bold text-green-500 uppercase tracking-widest mb-6">Live System Output</h4>
+                    <div class="space-y-4 font-mono text-sm text-slate-400">
+                        <p>> Initializing geo-sync... <span class="text-green-500">OK</span></p>
+                        <p>> Connecting TrustChain nodes... <span class="text-green-500">OK</span></p>
+                        <p>> Deploying neural classifiers... <span class="text-green-500">OK</span></p>
+                        <p>> Encrypting data streams... <span class="text-green-500">OK</span></p>
+                        <p>> System ready for government audit.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>AOS.init({ duration: 1000, once: true });</script>
+</body>
+</html>

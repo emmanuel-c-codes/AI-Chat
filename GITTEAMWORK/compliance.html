@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compliance Pro | EcoMonitor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Paystack Inline SDK -->
+    <script src="https://js.paystack.co/v1/inline.js"></script>
+    <!-- Firebase Compat SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+</head>
+<body class="bg-slate-50 min-h-screen pb-12">
+
+    <header class="bg-white px-6 py-4 flex items-center gap-4 sticky top-0 z-20 shadow-sm border-b border-slate-100">
+        <a href="dashboard.html" class="text-slate-600 p-1 hover:bg-slate-100 rounded-full transition-colors">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+        </a>
+        <h1 class="text-lg font-black text-slate-800 uppercase tracking-wide">Compliance Pro</h1>
+    </header>
+
+    <!-- Main clean container built to fit desktop and mobile displays natively -->
+    <main class="p-4 max-w-xl md:max-w-2xl mx-auto mt-4 space-y-4">
+        
+        <!-- Premium Tier Header Banner -->
+        <div class="bg-gradient-to-br from-purple-600 to-indigo-700 text-white rounded-2xl p-5 shadow-sm">
+            <p class="text-purple-200 text-xs font-bold uppercase tracking-wider">Corporate & Estate Automation</p>
+            <h2 class="text-lg md:text-xl font-black mt-1">Zero Task-Force Fines</h2>
+            <p class="text-xs md:text-sm text-purple-100 mt-2 leading-relaxed">
+                Generate dynamic environmental clearance certificates and log automated weekly waste tracking parameters effortlessly.
+            </p>
+        </div>
+
+        <!-- Document Input Form Card -->
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
+            <form id="complianceForm" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-2">Company / Estate Name</label>
+                    <input type="text" id="businessName" placeholder="e.g. Palmview Estate Management" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5 text-sm font-semibold text-slate-800 focus:outline-none focus:border-purple-500 transition-colors">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-2">Facility Property Category</label>
+                    <select id="propertyType" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5 text-sm font-semibold text-slate-800 focus:outline-none focus:border-purple-500 transition-colors">
+                        <option value="residential_estate">Residential Estate / Gated Community</option>
+                        <option value="commercial_office">Corporate Office Complex</option>
+                        <option value="hospitality_hub">Restaurant / Hotel Facility</option>
+                        <option value="industrial_site">Small-Scale Production Factory</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-2">Physical Property Address</label>
+                    <textarea id="propertyAddress" rows="2" placeholder="Provide complete physical coordinates..." required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5 text-sm font-semibold text-slate-800 focus:outline-none focus:border-purple-500 transition-colors resize-none"></textarea>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-2">Select Clearance Plan</label>
+                    <div class="grid grid-cols-2 gap-3">
+                        <label class="border-2 border-purple-500 bg-purple-50/40 rounded-xl p-3 flex flex-col cursor-pointer relative transition-all">
+                            <input type="radio" name="planSelection" value="monthly" checked class="absolute top-3 right-3 accent-purple-600">
+                            <span class="text-xs font-black text-slate-800">Monthly Tier</span>
+                            <span class="text-sm font-bold text-purple-700 mt-1">₦25,000<span class="text-[10px] text-slate-400 font-medium">/mo</span></span>
+                        </label>
+                        <label class="border border-slate-200 hover:border-purple-300 rounded-xl p-3 flex flex-col cursor-pointer relative transition-all">
+                            <input type="radio" name="planSelection" value="annual" class="absolute top-3 right-3 accent-purple-600">
+                            <span class="text-xs font-black text-slate-800">Annual Saver</span>
+                            <span class="text-sm font-bold text-purple-700 mt-1">₦240,000<span class="text-[10px] text-slate-400 font-medium">/yr</span></span>
+                        </label>
+                    </div>
+                </div>
+
+                <button type="submit" id="subscribeBtn" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm py-4 rounded-xl transition-all duration-200 active:scale-95 flex items-center justify-center gap-2">
+                    <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                    Activate Corporate Plan
+                </button>
+            </form>
+        </div>
+    </main>
+
+    <script>
+        // Initialize Firebase using global script architecture
+        const firebaseConfig = {
+            apiKey: "AIzaSyBFSIqcnP5U0CMjQZtIS3jK5VTVcHGLPRw",
+            authDomain: "client-cc4df.firebaseapp.com",
+            projectId: "client-cc4df",
+            storageBucket: "client-cc4df.firebasestorage.app",
+            messagingSenderId: "600063857476",
+            appId: "1:600063857476:web:9abfe8219251f56e67fd11",
+            measurementId: "G-MNM99NCKH9"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        let activeUid = null;
+        let userEmail = "";
+
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                activeUid = user.uid;
+                userEmail = user.email || `${user.uid}@ecomonitor.app`;
+            } else {
+                window.location.href = "login.html";
+            }
+        });
+
+        document.getElementById("complianceForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+
+            if (!activeUid) {
+                alert("Authenticating session... please wait or re-login.");
+                return;
+            }
+
+            const subscribeBtn = document.getElementById("subscribeBtn");
+            const businessName = document.getElementById("businessName").value;
+            const propertyType = document.getElementById("propertyType").value;
+            const propertyAddress = document.getElementById("propertyAddress").value;
+            const selectedPlan = document.querySelector('input[name="planSelection"]:checked').value;
+
+            const amountCost = (selectedPlan === "monthly") ? 25000 : 240000;
+
+            subscribeBtn.disabled = true;
+            subscribeBtn.innerText = "Opening Secure Checkout...";
+
+            // Verified Call to global PaystackPop Gateway
+            const handler = PaystackPop.setup({
+                key: 'pk_test_5b0c077814199b9a84d209bb26592f6dc6ab3860',
+                email: userEmail,
+                amount: amountCost * 100, // Amount in kobo
+                currency: "NGN",
+                ref: 'B2B-' + Math.floor((Math.random() * 1000000000) + 1),
+                callback: function(reference) {
+                    subscribeBtn.innerText = "Processing subscription...";
+
+                    const batch = db.batch();
+                    
+                    const reportRef = db.collection("reports").doc();
+                    batch.set(reportRef, {
+                        userId: activeUid,
+                        category: "B2B SaaS Subscription",
+                        title: `Pro Compliance: ${businessName}`,
+                        location: propertyAddress,
+                        priceValue: amountCost,
+                        paystackRef: reference.reference,
+                        status: "paid",
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+
+                    const userDocRef = db.collection("users").doc(activeUid);
+                    batch.update(userDocRef, {
+                        tier: "Pro Tier",
+                        businessVerified: true,
+                        complianceStatus: "active"
+                    });
+
+                    const jobRef = db.collection("marketplace_jobs").doc();
+                    batch.set(jobRef, {
+                        userId: activeUid,
+                        category: "B2B SaaS Subscription",
+                        title: `Pro Compliance: ${businessName}`,
+                        location: propertyAddress,
+                        priceValue: amountCost,
+                        paystackRef: reference.reference,
+                        status: "Pending Review",
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+
+                    batch.commit().then(() => {
+                        window.location.href = "dashboard.html";
+                    }).catch((err) => {
+                        console.error("Database updates failed:", err);
+                        alert("Payment successful, profile setup delayed. Ref: " + reference.reference);
+                        subscribeBtn.disabled = false;
+                    });
+                },
+                onClose: function() {
+                    alert("Transaction cancelled by user.");
+                    subscribeBtn.disabled = false;
+                    subscribeBtn.innerHTML = `
+                        <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                        Activate Corporate Plan
+                    `;
+                }
+            });
+
+            handler.openIframe();
+        });
+    </script>
+</body>
+</html>

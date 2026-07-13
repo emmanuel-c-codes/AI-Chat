@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>EcoMonitor | Reporting Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50">
+
+    <nav class="bg-white border-b p-6 mb-8 sticky top-0 z-50">
+        <div class="max-w-2xl mx-auto flex justify-between items-center">
+            <h1 class="font-black text-xl text-slate-800">EcoMonitor</h1>
+            <div class="space-x-6 text-sm font-bold">
+                <button onclick="showSection('reportSection')" class="text-green-600 hover:underline">Submit Report</button>
+                <button onclick="showSection('historySection')" class="text-slate-500 hover:underline">My Reports</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-2xl mx-auto p-6">
+        <section id="reportSection" class="block">
+            <div class="bg-white p-8 rounded-3xl shadow-lg">
+                <h2 class="text-2xl font-black mb-6">Submit Environmental Report</h2>
+                <form id="reportForm" class="space-y-4">
+                    <input type="text" id="location" required placeholder="Location" class="w-full p-4 border rounded-xl">
+                    
+                    <select id="category" class="w-full p-4 border rounded-xl">
+                        <option value="Waste">♻️ Waste</option>
+                        <option value="Flooding">🌊 Flooding</option>
+                        <option value="Sewage">🚰 Sewage</option>
+                        <option value="Air Pollution">💨 Air Pollution</option>
+                    </select>
+
+                    <textarea id="issue" required placeholder="Describe issue" class="w-full p-4 border rounded-xl h-32"></textarea>
+                    
+                    <label class="block text-sm font-bold text-gray-600">Upload Evidence Photo:</label>
+                    <input type="file" id="imageFile" accept="image/*" class="w-full p-2 border rounded-xl">
+                    
+                    <button type="button" onclick="getLocation()" class="text-green-600 font-bold text-sm hover:underline">📍 Use My GPS Location</button>
+                    <input type="hidden" id="lat">
+                    <input type="hidden" id="lng">
+                    
+                    <button type="submit" id="submitBtn" class="w-full bg-green-600 text-white py-4 rounded-xl font-bold hover:bg-green-700 transition">Submit Report</button>
+                </form>
+            </div>
+        </section>
+
+        <section id="historySection" class="hidden">
+            <div class="bg-white p-8 rounded-3xl shadow-lg">
+                <h3 class="text-xl font-black mb-4">My Reports</h3>
+                <div id="reportList" class="space-y-4">
+                    <p class="text-slate-400">Loading your history...</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, serverTimestamp, query, where, onSnapshot, orderBy } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+
+        window.showSection = (id) => {
+            document.getElementById('reportSection').style.display = (id === 'reportSection') ? 'block' : 'none';
+            document.getElementById('historySection').style.display = (id === 'historySection') ? 'block' : 'none';
+        };
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBFSIqcnP5U0CMjQZtIS3jK5VTVcHGLPRw",
+            projectId: "client-cc4df",
+            storageBucket: "client-cc4df.firebasestorage.app",
+            messagingSenderId: "600063857476",
+            appId: "1:600063857476:web:9abfe8219251f56e67fd11"
+        };
+        const db = getFirestore(initializeApp(firebaseConfig));
+        const IMGBB_API_KEY = "c92716e18fa6b65e124fac58dbfc6751";
+
+        let userId = localStorage.getItem('ecoUserId') || Math.random().toString(36).substr(2, 9);
+        localStorage.setItem('ecoUserId', userId);
+
+        window.getLocation = () => {
+            navigator.geolocation.getCurrentPosition((p) => {
+                document.getElementById('lat').value = p.coords.latitude;
+                document.getElementById('lng').value = p.coords.longitude;
+                alert("Location captured!");
+            });
+        };
+
+        document.getElementById('reportForm').onsubmit = async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('submitBtn');
+            btn.innerText = "Processing...";
+            btn.disabled = true;
+
+            let imageUrl = "";
+            const file = document.getElementById('imageFile').files[0];
+            if (file) {
+                const formData = new FormData();
+                formData.append("image", file);
+                const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, { method: "POST", body: formData });
+                const data = await res.json();
+                imageUrl = data.data.url;
+            }
+
+            await addDoc(collection(db, "reports"), {
+                uid: userId,
+                location: document.getElementById('location').value,
+                issue: document.getElementById('issue').value,
+                category: document.getElementById('category').value,
+                image: imageUrl,
+                lat: document.getElementById('lat').value,
+                lng: document.getElementById('lng').value,
+                status: "Pending",
+                createdAt: serverTimestamp()
+            });
+            alert("Report submitted!");
+            location.reload();
+        };
+
+        // Query reports by UID
+        onSnapshot(query(collection(db, "reports"), where("uid", "==", userId), orderBy("createdAt", "desc")), (snap) => {
+            const list = document.getElementById('reportList');
+            if (snap.empty) {
+                list.innerHTML = "<p class='text-slate-400'>No reports submitted yet.</p>";
+            } else {
+                list.innerHTML = snap.docs.map(doc => {
+                    const d = doc.data();
+                    return `<div class="border-b pb-4">
+                        <p class="font-bold text-slate-800">${d.location}</p>
+                        <p class="text-sm text-slate-500">${d.category} • Status: ${d.status}</p>
+                    </div>`;
+                }).join('');
+            }
+        });
+    </script>
+</body>
+</html>

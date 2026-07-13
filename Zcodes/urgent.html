@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Urgent Cleanup | EcoMonitor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Paystack Inline SDK -->
+    <script src="https://js.paystack.co/v1/inline.js"></script>
+    <!-- Firebase Compat SDKs (Runs everywhere without module errors) -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+</head>
+<body class="bg-slate-50 min-h-screen pb-12">
+
+    <header class="bg-white px-6 py-4 flex items-center gap-4 sticky top-0 z-20 shadow-sm border-b border-slate-100">
+        <a href="dashboard.html" class="text-slate-600 p-1 hover:bg-slate-100 rounded-full transition-colors">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+        </a>
+        <h1 class="text-lg font-black text-slate-800 uppercase tracking-wide">Urgent Marketplace</h1>
+    </header>
+
+    <!-- Unified responsive container: Centered and scales cleanly from mobile to desktop -->
+    <main class="p-4 max-w-xl md:max-w-2xl mx-auto mt-4 space-y-4">
+        
+        <!-- Info Banner -->
+        <div class="bg-blue-600 text-white rounded-2xl p-5 shadow-sm">
+            <div class="flex gap-4 items-start">
+                <div class="p-2.5 bg-blue-500 rounded-xl shrink-0">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+                <div>
+                    <h3 class="font-bold text-sm md:text-base">Escrow Secure Clearance</h3>
+                    <p class="text-xs md:text-sm text-blue-100 mt-1 leading-relaxed">Your payment is held safely by EcoMonitor. Funds are disbursed to private truck clearers only when you verify completion.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Form Card -->
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
+            <form id="urgentForm" class="space-y-5">
+                <div>
+                    <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-2">Debris / Waste Description</label>
+                    <input type="text" id="titleInput" placeholder="e.g. 3 Trucks of Commercial Plastic/Spills" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5 text-sm font-semibold text-slate-800 focus:outline-none focus:border-blue-500 transition-colors">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-2">Accurate Pickup Address</label>
+                    <textarea id="locationInput" rows="3" placeholder="Provide full address descriptors where the truck should park..." required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5 text-sm font-semibold text-slate-800 focus:outline-none focus:border-blue-500 transition-colors resize-none"></textarea>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-2">Payout Offer to Clearer (₦)</label>
+                    <input type="number" id="payoutInput" min="2000" placeholder="Minimum ₦2,000" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5 text-sm font-semibold text-slate-800 focus:outline-none focus:border-blue-500 transition-colors">
+                </div>
+
+                <button type="submit" id="payBtn" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm py-4 rounded-xl transition-all duration-200 active:scale-95 flex items-center justify-center gap-2">
+                    <svg class="w-4 h-4 text-emerald-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path></svg>
+                    Securely Pay & Post Job
+                </button>
+            </form>
+        </div>
+    </main>
+
+    <script>
+        // Initialize Firebase using standard global objects
+        const firebaseConfig = {
+          apiKey: "AIzaSyBFSIqcnP5U0CMjQZtIS3jK5VTVcHGLPRw",
+          authDomain: "client-cc4df.firebaseapp.com",
+          projectId: "client-cc4df",
+          storageBucket: "client-cc4df.firebasestorage.app",
+          messagingSenderId: "600063857476",
+          appId: "1:600063857476:web:9abfe8219251f56e67fd11",
+          measurementId: "G-MNM99NCKH9"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        let activeUid = null;
+        let activeUserEmail = "";
+
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                activeUid = user.uid;
+                activeUserEmail = user.email || `${user.uid}@ecomonitor.app`;
+            } else {
+                window.location.href = "login.html";
+            }
+        });
+
+        document.getElementById("urgentForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+
+            if (!activeUid) {
+                alert("Authenticating session... please wait or re-login.");
+                return;
+            }
+
+            const payBtn = document.getElementById("payBtn");
+            const title = document.getElementById("titleInput").value;
+            const location = document.getElementById("locationInput").value;
+            const amountVal = parseFloat(document.getElementById("payoutInput").value);
+
+            payBtn.disabled = true;
+            payBtn.innerText = "Opening Secure Checkout...";
+
+            // Direct Call to global PaystackPop
+            const handler = PaystackPop.setup({
+                key: 'pk_test_5b0c077814199b9a84d209bb26592f6dc6ab3860',
+                email: activeUserEmail,
+                amount: amountVal * 100, // Amount in kobo
+                currency: "NGN",
+                ref: 'ECO-' + Math.floor((Math.random() * 1000000000) + 1),
+                callback: function(reference) {
+                    payBtn.innerText = "Processing order...";
+                    
+                    // Write to Firestore collections
+                    Promise.all([
+                        db.collection("reports").add({
+                            userId: activeUid,
+                            category: "Urgent Marketplace Clean",
+                            title: title,
+                            location: location,
+                            priceValue: amountVal,
+                            paystackRef: reference.reference,
+                            status: "paid", 
+                            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                        }),
+                        db.collection("marketplace_jobs").add({
+                            userId: activeUid,
+                            category: "Urgent Marketplace Clean",
+                            title: title,
+                            location: location,
+                            priceValue: amountVal,
+                            paystackRef: reference.reference,
+                            status: "Open",
+                            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                        })
+                    ]).then(() => {
+                        window.location.href = "dashboard.html";
+                    }).catch((err) => {
+                        console.error("Database error:", err);
+                        alert("Payment successful, but record matching failed. Ref: " + reference.reference);
+                        payBtn.disabled = false;
+                    });
+                },
+                onClose: function() {
+                    alert("Transaction cancelled by user.");
+                    payBtn.disabled = false;
+                    payBtn.innerHTML = `
+                        <svg class="w-4 h-4 text-emerald-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path></svg>
+                        Securely Pay & Post Job
+                    `;
+                }
+            });
+
+            handler.openIframe();
+        });
+    </script>
+</body>
+</html>

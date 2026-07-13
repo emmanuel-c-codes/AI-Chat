@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Learning Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen p-4 md:p-8">
+    <div class="max-w-5xl mx-auto">
+        
+        <header class="mb-10 text-center">
+            <h1 class="text-4xl font-extrabold text-gray-800">Learning Hub</h1>
+            <p class="text-gray-500 mt-2">Curated resources to master new skills.</p>
+        </header>
+
+        <div class="mb-8">
+            <input type="text" id="searchInput" placeholder="Search resources..." 
+                   class="w-full p-4 rounded-xl border border-gray-200 shadow-sm mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400">
+            
+            <div class="flex flex-wrap gap-2 justify-center">
+                <button onclick="filterCategory('all')" class="px-4 py-2 bg-gray-200 rounded-full hover:bg-blue-500 hover:text-white transition">All</button>
+                <button onclick="filterCategory('video')" class="px-4 py-2 bg-gray-200 rounded-full hover:bg-blue-500 hover:text-white transition">Videos</button>
+                <button onclick="filterCategory('article')" class="px-4 py-2 bg-gray-200 rounded-full hover:bg-blue-500 hover:text-white transition">Articles</button>
+            </div>
+        </div>
+
+        <div id="resourceGrid" class="grid gap-6 md:grid-cols-3">
+            
+            <div class="resource-card bg-white p-6 rounded-lg shadow border-l-4 border-red-500" data-category="video">
+                <h2 class="font-bold text-xl">Python Crash Course</h2>
+                <p class="text-gray-600 mt-2 text-sm">A full 4-hour video guide for beginners.</p>
+                <a href="https://youtube.com" target="_blank" class="text-red-500 mt-4 block font-semibold hover:underline">Watch Video &rarr;</a>
+            </div>
+
+            <div class="resource-card bg-white p-6 rounded-lg shadow border-l-4 border-red-500" data-category="video">
+                <h2 class="font-bold text-xl">CSS Flexbox Tutorial</h2>
+                <p class="text-gray-600 mt-2 text-sm">Visual guide to modern layouts.</p>
+                <a href="https://youtube.com" target="_blank" class="text-red-500 mt-4 block font-semibold hover:underline">Watch Video &rarr;</a>
+            </div>
+
+            <div class="resource-card bg-white p-6 rounded-lg shadow border-l-4 border-blue-500" data-category="article">
+                <h2 class="font-bold text-xl">JS Fundamentals</h2>
+                <p class="text-gray-600 mt-2 text-sm">Deep dive into JavaScript logic.</p>
+                <a href="https://javascript.info" target="_blank" class="text-blue-500 mt-4 block font-semibold hover:underline">Read Article &rarr;</a>
+            </div>
+
+            <div class="resource-card bg-white p-6 rounded-lg shadow border-l-4 border-blue-500" data-category="article">
+                <h2 class="font-bold text-xl">Responsive Design Tips</h2>
+                <p class="text-gray-600 mt-2 text-sm">Best practices for mobile sites.</p>
+                <a href="https://web.dev" target="_blank" class="text-blue-500 mt-4 block font-semibold hover:underline">Read Article &rarr;</a>
+            </div>
+
+            <div class="resource-card bg-white p-6 rounded-lg shadow border-l-4 border-blue-500" data-category="article">
+                <h2 class="font-bold text-xl">Git Version Control</h2>
+                <p class="text-gray-600 mt-2 text-sm">Learn to manage your code history.</p>
+                <a href="https://git-scm.com" target="_blank" class="text-blue-500 mt-4 block font-semibold hover:underline">Read Article &rarr;</a>
+            </div>
+        </div>
+        
+        <footer class="mt-16 text-center text-gray-400 text-sm">
+            Built with purpose &bull; 2026
+        </footer>
+    </div>
+
+    <script>
+        document.getElementById('searchInput').addEventListener('keyup', function() {
+            let filter = this.value.toLowerCase();
+            document.querySelectorAll('.resource-card').forEach(card => {
+                card.style.display = card.textContent.toLowerCase().includes(filter) ? "" : "none";
+            });
+        });
+
+        function filterCategory(category) {
+            document.querySelectorAll('.resource-card').forEach(card => {
+                if (category === 'all' || card.getAttribute('data-category') === category) {
+                    card.style.display = "";
+                } else {
+                    card.style.display = "none";
+                }
+            });
+        }
+    </script>
+</body>
+</html>

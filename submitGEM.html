@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Government Verifier | EcoMonitor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800 font-sans">
+
+    <nav class="bg-slate-900 p-4 text-white shadow-md">
+        <h1 class="text-xl font-bold">Government Verification Portal</h1>
+    </nav>
+
+    <main class="p-6 max-w-4xl mx-auto mt-6">
+        <h2 class="text-2xl font-bold mb-4">Pending Approvals</h2>
+        
+        <div class="bg-white rounded-lg shadow overflow-hidden">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-gray-50 border-b border-gray-200">
+                        <th class="p-4 font-semibold text-sm">User ID</th>
+                        <th class="p-4 font-semibold text-sm">Material</th>
+                        <th class="p-4 font-semibold text-sm">Weight</th>
+                        <th class="p-4 font-semibold text-sm">Payout Value</th>
+                        <th class="p-4 font-semibold text-sm">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="pending-table" class="divide-y divide-gray-200">
+                    <!-- Rows injected by JS -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getFirestore, collection, query, where, onSnapshot, doc, runTransaction } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBFSIqcnP5U0CMjQZtIS3jK5VTVcHGLPRw",
+            authDomain: "client-cc4df.firebaseapp.com",
+            projectId: "client-cc4df",
+            storageBucket: "client-cc4df.firebasestorage.app",
+            messagingSenderId: "600063857476",
+            appId: "1:600063857476:web:9abfe8219251f56e67fd11",
+            measurementId: "G-MNM99NCKH9"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // 1. Fetch all pending logs
+        const logsRef = collection(db, "recycles");
+        const q = query(logsRef, where("status", "==", "pending"));
+
+        onSnapshot(q, (snapshot) => {
+            const table = document.getElementById('pending-table');
+            table.innerHTML = '';
+            
+            snapshot.forEach((docSnap) => {
+                const data = docSnap.data();
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="p-4 text-sm font-mono text-gray-500">${data.userId.substring(0,8)}...</td>
+                    <td class="p-4">${data.material}</td>
+                    <td class="p-4">${data.weight}kg</td>
+                    <td class="p-4 font-medium text-green-600">₦${data.payoutAmount}</td>
+                    <td class="p-4">
+                        <button class="approve-btn bg-green-600 text-white px-4 py-2 rounded text-sm hover:bg-green-700 transition" 
+                                data-id="${docSnap.id}" 
+                                data-uid="${data.userId}" 
+                                data-payout="${data.payoutAmount}">
+                            Approve
+                        </button>
+                    </td>
+                `;
+                table.appendChild(tr);
+            });
+
+            // 2. Attach Event Listeners to Buttons
+            document.querySelectorAll('.approve-btn').forEach(btn => {
+                btn.addEventListener('click', async (e) => {
+                    const btnEl = e.target;
+                    btnEl.disabled = true;
+                    btnEl.innerText = "Approving...";
+
+                    const recycleId = btnEl.getAttribute('data-id');
+                    const userId = btnEl.getAttribute('data-uid');
+                    const payoutAmount = parseFloat(btnEl.getAttribute('data-payout'));
+
+                    try {
+                        await approveAndFundWallet(recycleId, userId, payoutAmount);
+                        alert("Successfully approved and wallet credited!");
+                    } catch (error) {
+                        console.error(error);
+                        alert("Transaction failed.");
+                        btnEl.disabled = false;
+                        btnEl.innerText = "Approve";
+                    }
+                });
+            });
+        });
+
+        // 3. The Core Transaction (Update status AND add money)
+        async function approveAndFundWallet(recycleId, userId, payoutAmount) {
+            const recycleRef = doc(db, "recycles", recycleId);
+            const userRef = doc(db, "users", userId);
+
+            await runTransaction(db, async (transaction) => {
+                const userDoc = await transaction.get(userRef);
+                if (!userDoc.exists()) {
+                    throw "User does not exist!";
+                }
+
+                // Calculate new balance
+                const currentBalance = userDoc.data().walletBalance || 0;
+                const newBalance = currentBalance + payoutAmount;
+
+                // Execute both writes together
+                transaction.update(recycleRef, { status: "approved" });
+                transaction.update(userRef, { walletBalance: newBalance });
+            });
+        }
+    </script>
+</body>
+</html>

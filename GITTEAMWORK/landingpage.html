@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoMonitor Pro | Empowering Communities</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .glass-header {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(16px);
+        }
+        .hero-gradient {
+            background: radial-gradient(circle at top right, rgba(16, 185, 129, 0.15), transparent 50%),
+                        radial-gradient(circle at bottom left, rgba(59, 130, 246, 0.1), transparent 50%);
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 selection:bg-emerald-500 selection:text-white overflow-x-hidden">
+
+    <nav class="fixed top-0 w-full z-50 glass-header border-b border-slate-800 flex items-center justify-between px-6 md:px-16 py-4">
+        <div class="flex items-center gap-3">
+            <div class="bg-gradient-to-tr from-emerald-500 to-teal-400 p-2 rounded-xl text-slate-950 font-bold">
+                <i class="fa-solid fa-leaf text-lg"></i>
+            </div>
+            <span class="font-extrabold text-xl tracking-wider bg-gradient-to-r from-emerald-400 to-teal-200 bg-clip-text text-transparent">EcoMonitor<span class="text-xs font-medium text-slate-400 ml-1">PRO</span></span>
+        </div>
+        
+        <div class="hidden md:flex items-center gap-10 text-sm font-medium text-slate-400">
+            <a href="#benefits" class="hover:text-emerald-400 transition-colors">Benefits</a>
+            <a href="#workflow" class="hover:text-emerald-400 transition-colors">How It Works</a>
+            <a href="#stats" class="hover:text-emerald-400 transition-colors">Impact Data</a>
+        </div>
+
+        <div class="flex items-center gap-4">
+            <a href="login.html" class="text-sm font-semibold text-slate-400 hover:text-white transition">Sign In</a>
+            <a href="report.html" class="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-slate-950 px-5 py-2.5 rounded-xl font-bold text-sm transition-all transform hover:scale-[1.02] shadow-lg shadow-emerald-500/20">
+                File a Report
+            </a>
+        </div>
+    </nav>
+
+    <header class="relative pt-40 pb-24 px-6 hero-gradient text-center overflow-hidden">
+        <div class="absolute inset-0 bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-40"></div>
+        
+        <div class="relative z-10 max-w-4xl mx-auto">
+            <span class="inline-flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider mb-6">
+                <span class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></span> Next-Gen Reporting Platform
+            </span>
+            <h1 class="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight mb-8 leading-[1.15]">
+                Shape Your Environment <br>
+                <span class="bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 bg-clip-text text-transparent">With Absolute Clarity.</span>
+            </h1>
+            <p class="text-base sm:text-lg md:text-xl text-slate-400 max-w-2xl mx-auto mb-12 leading-relaxed">
+                Take civic action instantly. EcoMonitor Pro provides a beautiful, high-speed interface to report ecological threats, map environmental shifts, and build sustainable towns.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row justify-center gap-4 max-w-md mx-auto">
+                <a href="report.html" class="bg-slate-100 hover:bg-white text-slate-950 px-8 py-4 rounded-xl font-bold text-lg transition shadow-xl flex items-center justify-center gap-3">
+                    Get Started Now <i class="fa-solid fa-arrow-right text-sm"></i>
+                </a>
+                <a href="signup.html" class="bg-slate-900 hover:bg-slate-850 border border-slate-800 text-slate-300 px-8 py-4 rounded-xl font-bold text-lg transition flex items-center justify-center gap-2">
+                    Create Free Account
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <section id="benefits" class="py-24 px-6 max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-4">Engineered for Transparency</h2>
+            <p class="text-slate-400 max-w-xl mx-auto">Powerful community features built directly into your local mapping database ecosystem.</p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="bg-slate-900/50 border border-slate-800 p-8 rounded-3xl hover:border-emerald-500/30 transition duration-300 group">
+                <div class="w-12 h-12 bg-emerald-500/10 text-emerald-400 rounded-2xl flex items-center justify-center text-xl mb-6 group-hover:bg-emerald-500 group-hover:text-slate-950 transition-all duration-300">
+                    <i class="fa-solid fa-bolt"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3">Instant Uploads</h3>
+                <p class="text-slate-400 text-sm leading-relaxed">Submit reports with live cloud picture assets seamlessly over lightweight connections.</p>
+            </div>
+            <div class="bg-slate-900/50 border border-slate-800 p-8 rounded-3xl hover:border-teal-500/30 transition duration-300 group">
+                <div class="w-12 h-12 bg-teal-500/10 text-teal-400 rounded-2xl flex items-center justify-center text-xl mb-6 group-hover:bg-teal-500 group-hover:text-slate-950 transition-all duration-300">
+                    <i class="fa-solid fa-location-crosshairs"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3">Geotag Verification</h3>
+                <p class="text-slate-400 text-sm leading-relaxed">Pinpoint exact hazard zones with cross-platform GPS integrations for extreme accuracy.</p>
+            </div>
+            <div class="bg-slate-900/50 border border-slate-800 p-8 rounded-3xl hover:border-cyan-500/30 transition duration-300 group">
+                <div class="w-12 h-12 bg-cyan-500/10 text-cyan-400 rounded-2xl flex items-center justify-center text-xl mb-6 group-hover:bg-cyan-500 group-hover:text-slate-950 transition-all duration-300">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3">Secure & Encrypted</h3>
+                <p class="text-slate-400 text-sm leading-relaxed">Your profile privacy is heavily protected while allowing public updates for authority entities.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="workflow" class="bg-slate-900 py-24 px-6 border-y border-slate-800">
+        <div class="max-w-5xl mx-auto">
+            <h2 class="text-3xl md:text-4xl font-extrabold text-center mb-16 tracking-tight">Three Steps to Safety</h2>
+            
+            <div class="grid md:grid-cols-3 gap-12 relative">
+                <div class="text-center">
+                    <div class="text-5xl font-black text-slate-800 mb-4">01</div>
+                    <h4 class="text-lg font-bold mb-2">Identify Issue</h4>
+                    <p class="text-slate-400 text-sm">Spot structural damage, trash waste, or localized flooding issues near you.</p>
+                </div>
+                <div class="text-center">
+                    <div class="text-5xl font-black text-slate-800 mb-4">02</div>
+                    <h4 class="text-lg font-bold mb-2">Snap & Upload</h4>
+                    <p class="text-slate-400 text-sm">Attach coordinates alongside descriptive metrics through our fast portal.</p>
+                </div>
+                <div class="text-center">
+                    <div class="text-5xl font-black text-slate-800 mb-4">03</div>
+                    <h4 class="text-lg font-bold mb-2">Track Metrics</h4>
+                    <p class="text-slate-400 text-sm">Monitor live status upgrades as community clean-up crews organize tracking.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="stats" class="py-24 px-6 max-w-6xl mx-auto text-center">
+        <div class="bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800 rounded-[40px] p-12 md:p-16 relative overflow-hidden">
+            <div class="absolute -right-20 -bottom-20 w-80 h-80 bg-emerald-500/5 rounded-full blur-3xl"></div>
+            
+            <h3 class="text-2xl md:text-4xl font-extrabold mb-12">System Action Footprint</h3>
+            <div class="grid sm:grid-cols-3 gap-8">
+                <div>
+                    <p class="text-5xl font-black text-emerald-400 mb-2">500+</p>
+                    <p class="text-slate-400 text-sm font-medium uppercase tracking-wider">Reports Logged</p>
+                </div>
+                <div>
+                    <p class="text-5xl font-black text-teal-400 mb-2">94%</p>
+                    <p class="text-slate-400 text-sm font-medium uppercase tracking-wider">Resolved Cases</p>
+                </div>
+                <div>
+                    <p class="text-5xl font-black text-cyan-400 mb-2">12</p>
+                    <p class="text-slate-400 text-sm font-medium uppercase tracking-wider">Active Sectors</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-12 border-t border-slate-900 text-center text-xs text-slate-500 bg-slate-950">
+        <p>&copy; 2026 EcoMonitor Platform Engine. Built for civic empowerment.</p>
+    </footer>
+
+</body>
+</html>

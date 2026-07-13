@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoMonitor | Admin Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .custom-scrollbar::-webkit-scrollbar { height: 6px; width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 10px; }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fade-up { animation: fadeUp 0.5s ease-out forwards; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen font-sans selection:bg-green-200">
+
+    <header class="bg-white border-b border-slate-200 px-6 py-4 shadow-sm sticky top-0 z-30">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-slate-900 rounded-xl flex items-center justify-center shadow-md">
+                    <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                </div>
+                <div>
+                    <h1 class="text-xl font-black text-slate-900">Admin Dashboard</h1>
+                    <p class="text-[10px] font-bold text-green-600 uppercase tracking-wider">Oversight Portal</p>
+                </div>
+            </div>
+            <button id="logoutBtn" class="text-xs font-bold text-slate-500 hover:text-red-500 transition">Logout</button>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto w-full px-4 py-8 space-y-6">
+        <!-- Analytics -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm"><p class="text-[10px] font-bold text-slate-400 uppercase">Total</p><h2 id="countTotal" class="text-3xl font-black">0</h2></div>
+            <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm"><p class="text-[10px] font-bold text-slate-400 uppercase">Pending</p><h2 id="countPending" class="text-3xl font-black text-amber-500">0</h2></div>
+            <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm"><p class="text-[10px] font-bold text-slate-400 uppercase">Resolved</p><h2 id="countResolved" class="text-3xl font-black text-green-500">0</h2></div>
+        </div>
+
+        <div class="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden">
+            <div class="overflow-x-auto custom-scrollbar">
+                <table class="w-full text-left min-w-[1000px]">
+                    <thead class="bg-slate-50 text-[10px] uppercase font-bold text-slate-400 tracking-wider">
+                        <tr>
+                            <th class="p-5 pl-6">Report Info</th>
+                            <th class="p-5">Visual Evidence</th>
+                            <th class="p-5">Location</th>
+                            <th class="p-5">Description</th>
+                            <th class="p-5">Status</th>
+                            <th class="p-5 text-right">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="reportList" class="divide-y divide-slate-50 text-sm"></tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
+        import { getFirestore, collection, onSnapshot, query, doc, updateDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBFSIqcnP5U0CMjQZtIS3jK5VTVcHGLPRw",
+            authDomain: "client-cc4df.firebaseapp.com",
+            projectId: "client-cc4df",
+            storageBucket: "client-cc4df.firebasestorage.app",
+            messagingSenderId: "600063857476",
+            appId: "1:600063857476:web:9abfe8219251f56e67fd11",
+            measurementId: "G-MNM99NCKH9"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        document.getElementById('logoutBtn').onclick = () => signOut(auth).then(() => window.location.href = "login.html");
+
+        onAuthStateChanged(auth, (user) => {
+            if (!user) window.location.href = "login.html";
+            
+            onSnapshot(query(collection(db, "reports")), (snap) => {
+                let total = 0, pending = 0, resolved = 0;
+                let allDocs = snap.docs.sort((a, b) => (b.data().createdAt?.toMillis() || 0) - (a.data().createdAt?.toMillis() || 0));
+
+                document.getElementById('reportList').innerHTML = allDocs.map(docSnap => {
+                    const d = docSnap.data();
+                    const id = docSnap.id;
+                    const isResolved = d.status === 'resolved';
+                    
+                    total++;
+                    isResolved ? resolved++ : pending++;
+
+                    return `
+                    <tr class="hover:bg-slate-50 transition-colors">
+                        <td class="p-5 pl-6 align-top">
+                            <p class="font-black text-slate-900">${d.reporterName || 'Anonymous'}</p>
+                            <p class="text-[9px] font-mono text-slate-400">ID: ${id.substring(0, 8)}</p>
+                            <p class="text-[10px] text-slate-400 mt-1">${d.createdAt ? new Date(d.createdAt.seconds * 1000).toLocaleString() : 'N/A'}</p>
+                        </td>
+                        <td class="p-5 align-top">
+                            <div class="flex gap-2 overflow-x-auto max-w-[200px] custom-scrollbar">
+                                ${(d.images || [d.image]).filter(Boolean).map(url => `<a href="${url}" target="_blank"><img src="${url}" class="w-16 h-16 object-cover rounded-lg border"></a>`).join('')}
+                            </div>
+                        </td>
+                        <td class="p-5 align-top">
+                            <p class="font-bold text-slate-800 text-xs">${d.location}</p>
+                            <span class="inline-block mt-1 bg-slate-100 px-2 py-0.5 rounded text-[9px] font-bold uppercase text-slate-600">${d.category}</span>
+                        </td>
+                        <td class="p-5 align-top text-slate-600 max-w-xs truncate">${d.issue}</td>
+                        <td class="p-5 align-top">
+                            <span class="px-3 py-1 rounded-full text-[10px] font-black uppercase ${isResolved ? 'bg-green-100 text-green-600' : 'bg-amber-100 text-amber-600'}">${d.status}</span>
+                        </td>
+                        <td class="p-5 align-top text-right">
+                            ${!isResolved ? `<button onclick="window.resolve('${id}')" class="bg-slate-900 text-white px-4 py-2 rounded-lg text-[10px] font-bold">Mark Resolved</button>` : '✓ Done'}
+                        </td>
+                    </tr>`;
+                }).join('');
+
+                document.getElementById('countTotal').innerText = total;
+                document.getElementById('countPending').innerText = pending;
+                document.getElementById('countResolved').innerText = resolved;
+            });
+        });
+
+        window.resolve = (id) => updateDoc(doc(db, "reports", id), { status: "resolved" });
+    </script>
+</body>
+</html>

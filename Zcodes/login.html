@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - EcoMonitor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        .glass-nav { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(8px); }
+        [data-aos="fade-up"] { transform: translate3d(0, 20px, 0) !important; }
+        [data-aos="fade-up"].aos-animate { transform: translate3d(0, 0, 0) !important; }
+    </style>
+</head>
+<body class="bg-gray-50 overflow-x-hidden">
+
+    <nav class="fixed top-0 w-full z-50 glass-nav border-b border-gray-100 shadow-sm flex items-center justify-between px-4 md:px-8 py-4">
+        <div class="flex items-center gap-2">
+            <img src="https://api.iconify.design/lucide:leaf.svg?color=%23059669" class="w-8 h-8">
+            <span class="font-bold text-lg md:text-xl text-emerald-600">EcoMonitor</span>
+        </div>
+        <div class="flex items-center gap-3 md:gap-6 text-xs md:text-sm font-medium text-gray-600">
+            <a href="index.html" class="text-emerald-600 transition">Home</a>
+            <a href="login.html" class="text-emerald-600 transition">Login</a>
+            <a href="signup.html" class="bg-emerald-600 text-white px-3 md:px-4 py-2 rounded-lg hover:bg-emerald-700 transition">Sign Up</a>
+        </div>
+    </nav>
+
+    <main class="flex flex-col items-center justify-center min-h-screen px-4 py-20">
+        <div class="w-full max-w-sm flex flex-col items-center" data-aos="fade-up">
+            
+            <div class="text-center mb-8">
+                <img src="https://api.iconify.design/lucide:leaf.svg?color=%23059669" class="w-14 h-14 mx-auto mb-4">
+                <h1 class="text-3xl font-extrabold text-gray-900 tracking-tight">Welcome back</h1>
+                <p class="text-gray-600 mt-2">Sign in to access your dashboard</p>
+            </div>
+
+            <div class="bg-white p-8 rounded-2xl shadow-xl border border-gray-100 w-full transition-all duration-300 hover:shadow-2xl">
+                
+                <div id="feedback" class="hidden text-sm p-3 rounded-lg mb-4 text-center font-medium"></div>
+
+                <form id="loginForm" class="space-y-5">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-800 mb-1.5"><i class="fa-solid fa-envelope mr-2 text-emerald-500"></i>Email</label>
+                        <input type="email" id="email" required placeholder="you@example.com" class="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-emerald-200 focus:border-emerald-500 outline-none transition">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-800 mb-1.5"><i class="fa-solid fa-lock mr-2 text-emerald-500"></i>Password</label>
+                        <input type="password" id="password" required placeholder="••••••••" class="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-emerald-200 focus:border-emerald-500 outline-none transition">
+                    </div>
+                    <button type="submit" id="submitBtn" class="w-full bg-emerald-600 text-white py-3 rounded-lg font-bold hover:bg-emerald-700 transition active:scale-[0.98]">Sign In →</button>
+                </form>
+
+                <div class="relative my-8"><div class="absolute inset-0 flex items-center"><div class="w-full border-t border-gray-200"></div></div><div class="relative flex justify-center text-sm"><span class="bg-white px-4 text-gray-500 font-medium">Or</span></div></div>
+
+                <button id="googleBtn" class="w-full border border-gray-300 py-3 rounded-lg font-semibold text-gray-700 flex items-center justify-center gap-2 hover:bg-gray-100 transition">
+                    <svg class="w-5 h-5" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 6.58c1.59 0 3.02.55 4.14 1.62l3.12-3.12C17.46 3.07 14.97 2 12 2 7.7 2 3.99 4.47 2.18 7.07l3.66 2.83c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+                    Continue with Google
+                </button>
+                <p class="text-center text-sm text-gray-600 mt-8">Don't have an account? <a href="signup.html" class="text-emerald-600 font-semibold hover:underline">Sign up</a></p>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>AOS.init({ duration: 350, once: true });</script>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+        // Standardized to EcoMonitor Config
+        const firebaseConfig = {
+            apiKey: "AIzaSyBFSIqcnP5U0CMjQZtIS3jK5VTVcHGLPRw",
+            authDomain: "client-cc4df.firebaseapp.com",
+            projectId: "client-cc4df",
+            storageBucket: "client-cc4df.firebasestorage.app",
+            messagingSenderId: "600063857476",
+            appId: "1:600063857476:web:9abfe8219251f56e67fd11",
+            measurementId: "G-MNM99NCKH9"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const feedback = document.getElementById('feedback');
+
+        function showFeedback(message, isError = true) {
+            feedback.textContent = message;
+            feedback.className = `text-sm p-3 rounded-lg mb-4 text-center font-medium ${isError ? 'bg-red-100 text-red-700' : 'bg-emerald-100 text-emerald-700'}`;
+            feedback.classList.remove('hidden');
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            document.getElementById('submitBtn').disabled = true;
+            document.getElementById('submitBtn').innerText = "Authenticating...";
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+                showFeedback("Login successful! Redirecting...", false);
+                setTimeout(() => window.location.href = "dashboard.html", 1500);
+            } catch (error) {
+                showFeedback("Invalid email or password.");
+                document.getElementById('submitBtn').disabled = false;
+                document.getElementById('submitBtn').innerText = "Sign In →";
+            }
+        });
+
+        document.getElementById('googleBtn').addEventListener('click', async () => {
+            try {
+                await signInWithPopup(auth, new GoogleAuthProvider());
+                showFeedback("Logged in successfully!", false);
+                setTimeout(() => window.location.href = "dashboard.html", 1500);
+            } catch (error) {
+                showFeedback("Google login failed.");
+            }
+        });
+    </script>
+</body>
+</html>

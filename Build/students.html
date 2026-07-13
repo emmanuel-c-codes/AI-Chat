@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FocusNotes | Student Organizer</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; max-width: 600px; margin: 40px auto; background: #f4f7f6; }
+        .container { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        input, textarea, button { width: 100%; margin-bottom: 10px; padding: 10px; box-sizing: border-box; }
+        button { background: #5c67f2; color: white; border: none; cursor: pointer; border-radius: 4px; }
+        .note-card { border-left: 5px solid #5c67f2; background: #fff; padding: 10px; margin: 10px 0; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Add Study Note</h2>
+    <input type="text" id="subject" placeholder="Subject (e.g. Biology)">
+    <textarea id="note" placeholder="Key concept or formula..."></textarea>
+    <button onclick="addNote()">Save Note</button>
+
+    <div id="notesContainer"></div>
+</div>
+
+<script>
+    // This 'state' acts as our temporary data store. 
+    // In a real app, this would be replaced by an API call to a database.
+    let appState = [];
+
+    function addNote() {
+        const subject = document.getElementById('subject').value;
+        const note = document.getElementById('note').value;
+
+        if (subject && note) {
+            // "Adding" to the state
+            appState.push({ subject, note });
+            renderNotes();
+            // Clear inputs
+            document.getElementById('subject').value = '';
+            document.getElementById('note').value = '';
+        }
+    }
+
+    function renderNotes() {
+        const container = document.getElementById('notesContainer');
+        container.innerHTML = appState.map(item => `
+            <div class="note-card">
+                <strong>${item.subject}</strong>
+                <p>${item.note}</p>
+            </div>
+        `).join('');
+    }
+</script>
+
+</body>
+</html>

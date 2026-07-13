@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoMonitor Government Dashboard</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet/dist/leaflet.css"
+    />
+    <link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+<link
+rel="stylesheet"
+href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.css">
+
+<link
+rel="stylesheet"
+href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.Default.css">
+</head>
+
+<body class="bg-gray-100">
+
+<div class="flex min-h-screen">
+
+    
+    <!-- ================= Sidebar ================= -->
+<aside
+    id="sidebar"
+    class="w-72 bg-green-800 text-white flex flex-col transition-all duration-300 min-h-screen">
+
+    <!-- Header -->
+    <div class="p-6 border-b border-green-700">
+
+        <div class="flex items-center justify-between">
+
+             <div class="flex items-center gap-3">
+
+                <i class="fa-solid fa-leaf text-3xl"></i>
+
+                <div class="sidebar-text">
+
+                    <h1 class="text-2xl font-black">
+                        EcoMonitor
+                    </h1>
+
+                    <p class="text-green-200 text-sm">
+                        Government Portal
+                    </p>
+
+                </div> 
+            
+            </div>
+
+            <button
+                id="toggleSidebar"
+                class="w-10 h-10 rounded-lg hover:bg-green-700 transition flex items-center justify-center">
+
+                <i class="fa-solid fa-bars text-xl"></i>
+
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- Navigation -->
+    <nav class="flex-1 mt-6 px-4 space-y-2">
+
+        <!-- Dashboard -->
+        <section id="dashboard" class="p-8 flex items-center gap-4 px-4 py-3 rounded-xl bg-green-700 hover:bg-green-600 transition">
+                        <i class="fa-solid fa-chart-line text-lg w-6 text-center"></i>
+
+            <span class="sidebar-text font-semibold">
+                Dashboard
+            </span>
+
+        </section>
+
+        <!-- Live Map -->
+        <a href="#map"
+            class="flex items-center gap-4 px-4 py-3 rounded-xl hover:bg-green-700 transition">
+
+            <i class="fa-solid fa-map-location-dot text-lg w-6 text-center"></i>
+
+            <span class="sidebar-text">
+                Live Map
+            </span>
+
+        </a>
+
+        <!-- Reports -->
+        <a href="#reports"
+            class="flex items-center gap-4 px-4 py-3 rounded-xl hover:bg-green-700 transition">
+
+            <i class="fa-solid fa-file-lines text-lg w-6 text-center"></i>
+
+            <span class="sidebar-text">
+                Reports
+            </span>
+
+        </a>
+
+        <!-- Analytics -->
+        <a href="#analytics"
+            class="flex items-center gap-4 px-4 py-3 rounded-xl hover:bg-green-700 transition">
+
+            <i class="fa-solid fa-chart-column text-lg w-6 text-center"></i>
+
+            <span class="sidebar-text">
+                Analytics
+            </span>
+
+        </a>
+
+        <!-- Officers -->
+        <a href="#officers"
+            class="flex items-center gap-4 px-4 py-3 rounded-xl hover:bg-green-700 transition">
+
+            <i class="fa-solid fa-user-shield text-lg w-6 text-center"></i>
+
+            <span class="sidebar-text">
+                Officers
+            </span>
+
+        </a>
+
+        <!-- Hotspots -->
+        <a href="#hotspots"
+            class="flex items-center gap-4 px-4 py-3 rounded-xl hover:bg-green-700 transition">
+
+            <i class="fa-solid fa-location-dot text-lg w-6 text-center"></i>
+
+            <span class="sidebar-text">
+                Hotspots
+            </span>
+
+        </a>
+
+        <!-- Notifications -->
+        <a href="#notifications"
+            class="flex items-center gap-4 px-4 py-3 rounded-xl hover:bg-green-700 transition">
+
+            <i class="fa-solid fa-bell text-lg w-6 text-center"></i>
+
+            <span class="sidebar-text">
+                Notifications
+            </span>
+
+        </a>
+
+        <!-- Citizens -->
+        <a href="#citizens"
+            class="flex items-center gap-4 px-4 py-3 rounded-xl hover:bg-green-700 transition">
+
+            <i class="fa-solid fa-users text-lg w-6 text-center"></i>
+
+            <span class="sidebar-text">
+                Citizens
+            </span>
+
+        </a>
+
+        <!-- Settings -->
+        <a href="#settings"
+            class="flex items-center gap-4 px-4 py-3 rounded-xl hover:bg-green-700 transition">
+
+            <i class="fa-solid fa-gear text-lg w-6 text-center"></i>
+
+            <span class="sidebar-text">
+                Settings
+            </span>
+
+        </a>
+
+    </nav>
+
+    <!-- Logout -->
+    <div class="border-t border-green-700 p-5">
+
+        <button
+            class="w-full bg-red-500 hover:bg-red-600 py-3 rounded-xl font-semibold transition flex items-center justify-center gap-2">
+
+            <i class="fa-solid fa-right-from-bracket"></i>
+
+            <span class="sidebar-text">
+                Logout
+            </span>
+
+        </button>
+
+    </div>
+
+</aside>
+    <!-- Main Content -->
+
+    <main class="flex-1">
+
+        <!-- Navbar -->
+
+        <header class="bg-white shadow px-8 py-5 flex justify-between items-center">
+
+            <div>
+
+                <h2 class="text-3xl font-bold">
+                    Government Dashboard
+                </h2>
+
+                <p class="text-gray-500">
+                    Welcome back, Administrator
+                </p>
+
+            </div>
+            <div class="flex items-center gap-5">
+
+<button class="relative">
+
+<i class="fa-regular fa-bell text-2xl"></i>
+
+<span
+class="absolute -top-1 -right-2
+bg-red-500
+text-white
+text-xs
+rounded-full
+w-5
+h-5
+flex
+items-center
+justify-center">
+
+5
+
+</span>
+
+</button>
+
+<img
+src="https://i.pravatar.cc/50"
+class="w-11 h-11 rounded-full">
+
+<div>
+
+<p class="font-bold">
+
+Administrator
+
+</p>
+
+<p class="text-sm text-gray-500">
+
+Federal Ministry
+
+</p>
+
+</div>
+
+</div>
+
+        </header>
+
+        <!-- Dashboard Content -->
+
+        <section class="p-8">
+
+            <!-- Cards -->
+
+            <div class="grid md:grid-cols-2 xl:grid-cols-4 gap-6">
+
+                <div class="bg-white rounded-2xl shadow p-6">
+
+                    <h4 class="text-gray-500">
+                        Total Reports
+                    </h4>
+
+                    <p id="totalReports" class="text-4xl font-black mt-3">
+                        2,458
+                    </p>
+
+                    <p class="text-green-600 mt-2">
+                        ▲ 8% this week
+                    </p>
+
+                </div>
+
+                <div class="bg-white rounded-2xl shadow p-6">
+
+                    <h4 class="text-gray-500">
+                        Pending
+                    </h4>
+
+                    <p id="pendingReports" class="text-4xl font-black mt-3 text-yellow-500">
+                        48
+                    </p>
+
+                    <p class="mt-2">
+                        Awaiting review
+                    </p>
+
+                </div>
+
+                <div class="bg-white rounded-2xl shadow p-6">
+
+                    <h4 class="text-gray-500">
+                        Resolved
+                    </h4>
+
+                    <p id="resolvedReports"class="text-4xl font-black mt-3 text-green-600">
+                        2,301
+                    </p>
+
+                    <p class="mt-2">
+                        Successfully closed
+                    </p>
+
+                </div>
+
+                <div class="bg-white rounded-2xl shadow p-6">
+
+                    <h4 class="text-gray-500">
+                        Critical Alerts
+                    </h4>
+
+                    <p id="criticalReports" class="text-4xl font-black mt-3 text-red-500">
+                        14
+                    </p>
+
+                    <p class="mt-2">
+                        Immediate attention
+                    </p>
+
+                </div>
+
+            </div>
+
+            <!-- Map -->
+
+            <div class="bg-white rounded-3xl shadow mt-8 p-6">
+                <div id="map" class="h-[500px] rounded-2xl"></div>
+<div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-5">
+
+    <h3 class="text-2xl font-bold">
+        Live Environmental Map
+    </h3>
+
+    <div class="flex flex-wrap gap-3">
+      <select
+    id="stateFilter"
+    class="border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500">
+
+    <option value="All States">All States</option>
+
+</select>
+<select
+    id="typeFilter"
+    class="border border-gray-300 rounded-xl px-4 py-2">
+
+    <option value="All Categories">All Categories</option>
+
+</select>
+<select
+    id="statusFilter"
+    class="border border-gray-300 rounded-xl px-4 py-2">
+
+    <option value="All Status">All Status</option>
+</select>
+<input
+    id="searchBox"
+    type="text"
+    placeholder="Search state or incident..."
+    class="border border-gray-300 rounded-xl px-4 py-2 lg:w-64">
+        <button
+            id="locateMe"
+            class="bg-blue-600 text-white px-5 py-2 rounded-xl hover:bg-blue-700">
+             Locate Me
+        </button>
+
+        <button
+            id="refreshMap"
+            class="bg-green-600 text-white px-5 py-2 rounded-xl hover:bg-green-700">
+             Refresh
+        </button>
+
+    </div>
+
+</div>
+            </div>
+            <div
+    id="reportForm"
+    class="hidden bg-white shadow-xl rounded-2xl p-6 mt-6">
+
+    <h3 class="text-2xl font-bold mb-5">
+        New Environmental Report
+    </h3>
+
+    <form id="incidentForm">
+
+        <div class="grid md:grid-cols-2 gap-5">
+
+            <div>
+                <label class="font-semibold">Latitude</label>
+                <input
+                    id="latitude"
+                    readonly
+                    class="w-full border rounded-lg p-3 mt-2">
+            </div>
+
+            <div>
+                <label class="font-semibold">Longitude</label>
+                <input
+                    id="longitude"
+                    readonly
+                    class="w-full border rounded-lg p-3 mt-2">
+            </div>
+
+        </div>
+
+        <div class="mt-5">
+
+            <label class="font-semibold">
+                Incident Type
+            </label>
+
+            <select
+                id="incidentType"
+                class="w-full border rounded-lg p-3 mt-2">
+
+                <option>Illegal Dumping</option>
+                <option>Flood</option>
+                <option>Oil Spill</option>
+                <option>Air Pollution</option>
+                <option>Blocked Drainage</option>
+
+            </select>
+
+        </div>
+
+        <div class="mt-5">
+
+            <label>Description</label>
+
+            <textarea
+                id="description"
+                rows="4"
+                class="w-full border rounded-lg p-3 mt-2"></textarea>
+
+        </div>
+
+        <button
+            class="mt-6 bg-green-600 text-white px-6 py-3 rounded-xl">
+
+            Submit Report
+
+        </button>
+
+    </form>
+
+</div>
+
+            <!-- Bottom -->
+
+            <div class="grid xl:grid-cols-3 gap-8 mt-8">
+
+                <!-- Reports -->
+
+                <div class="xl:col-span-2 bg-white rounded-3xl shadow p-6" id="reports">
+
+                    <h3 class="text-2xl font-bold mb-6">
+                        Recent Reports
+                    </h3>
+
+                    <div class="overflow-auto">
+
+                        <table class="w-full">
+
+                            <thead>
+
+                            <tr class="border-b">
+
+                                <th class="text-left py-3">ID</th>
+                                <th class="text-left">Category</th>
+                                <th class="text-left">Location</th>
+                                <th class="text-left">Priority</th>
+                                <th class="text-left">Status</th>
+
+                            </tr>
+
+                            </thead>
+
+                            <tbody id="reportsTableBody">
+
+                           
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+                <!-- Activity -->
+
+                <div class="bg-white rounded-3xl shadow p-6">
+
+                    <h3 class="text-2xl font-bold mb-6">
+
+                        Recent Activity
+
+                    </h3>
+
+                    <div class="space-y-5">
+
+                        <div class="border-l-4 border-green-500 pl-4">
+
+                            <p class="font-semibold">
+                                New report submitted
+                            </p>
+
+                            <span class="text-gray-500 text-sm">
+                                10 minutes ago
+                            </span>
+
+                        </div>
+
+                        <div class="border-l-4 border-blue-500 pl-4">
+
+                            <p class="font-semibold">
+                                Officer assigned
+                            </p>
+
+                            <span class="text-gray-500 text-sm">
+                                30 minutes ago
+                            </span>
+
+                        </div>
+
+                        <div class="border-l-4 border-red-500 pl-4">
+
+                            <p class="font-semibold">
+                                Flood alert issued
+                            </p>
+
+                            <span class="text-gray-500 text-sm">
+                                1 hour ago
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                 <!-- Analytics -->
+<section id="analytics" class="mt-8">
+
+    <h2 class="text-3xl font-bold mb-6">
+        Environmental Analytics
+    </h2>
+
+    <div class="grid lg:grid-cols-2 gap-6">
+
+        <!-- Reports by Month -->
+        <div class="bg-white rounded-2xl shadow p-6">
+
+            <h3 class="text-xl font-bold mb-5">
+                Reports by Month
+            </h3>
+
+            <canvas id="monthlyChart"></canvas>
+
+        </div>
+
+        <!-- Categories -->
+        <div class="bg-white rounded-2xl shadow p-6">
+
+            <h3 class="text-xl font-bold mb-5">
+                Incident Categories
+            </h3>
+
+            <canvas id="categoryChart"></canvas>
+
+        </div>
+
+    </div>
+
+    <div class="bg-white rounded-2xl shadow p-6 mt-6">
+
+        <h3 class="text-xl font-bold mb-5">
+            Reports by State
+        </h3>
+
+        <canvas id="stateChart"></canvas>
+
+    </div>
+
+</section>
+
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+<section id="officers" class="mt-10">
+
+    <!-- Header -->
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
+
+        <div>
+            <h2 class="text-3xl font-bold text-gray-800">
+                Environmental Officers
+            </h2>
+            <p class="text-gray-500">
+                Manage environmental field officers across Nigeria.
+            </p>
+        </div>
+
+        <button id="addOfficerBtn"
+            class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-xl shadow">
+            <i class="fa-solid fa-plus mr-2"></i>
+            Add Officer
+        </button>
+
+    </div>
+
+    <!-- Statistics -->
+    <div class="grid md:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
+
+        <div class="bg-white rounded-2xl shadow p-6">
+            <p class="text-gray-500">Total Officers</p>
+            <h2 id="totalOfficers" class="text-4xl font-bold mt-2">0</h2>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow p-6">
+            <p class="text-gray-500">Active</p>
+            <h2 id="activeOfficers" class="text-4xl text-green-600 font-bold mt-2">0</h2>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow p-6">
+            <p class="text-gray-500">On Leave</p>
+            <h2 id="leaveOfficers" class="text-4xl text-yellow-500 font-bold mt-2">0</h2>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow p-6">
+            <p class="text-gray-500">Cases Assigned</p>
+            <h2 id="assignedCases" class="text-4xl text-blue-600 font-bold mt-2">0</h2>
+        </div>
+
+    </div>
+
+    <!-- Search -->
+    <div class="bg-white rounded-2xl shadow p-6 mb-8">
+
+        <input
+            id="officerSearch"
+            type="text"
+            placeholder="Search officers..."
+            class="w-full border rounded-xl px-5 py-3 focus:ring-2 focus:ring-green-500 outline-none">
+
+    </div>
+
+    <!-- Officers Grid -->
+    <div
+        id="officerContainer"
+        class="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
+
+    </div>
+
+</section>
+<!-- Add Officer Modal -->
+<div id="officerModal"
+    class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
+
+    <div class="bg-white rounded-2xl shadow-xl w-full max-w-2xl p-8">
+
+        <div class="flex justify-between items-center mb-6">
+
+            <h2
+    id="officerModalTitle"
+    class="text-2xl font-bold">
+
+    Add Environmental Officer
+
+</h2>
+
+            <button
+                id="closeOfficerModal"
+                class="text-3xl font-bold text-gray-500 hover:text-red-500">
+
+                &times;
+
+            </button>
+
+        </div>
+
+        <form id="officerForm" class="space-y-5">
+
+            <div class="grid md:grid-cols-2 gap-4">
+
+                <input
+                    id="officerName"
+                    type="text"
+                    placeholder="Full Name"
+                    class="border rounded-lg px-4 py-3 w-full"
+                    required>
+
+                <input
+                    id="officerDepartment"
+                    type="text"
+                    placeholder="Department"
+                    class="border rounded-lg px-4 py-3 w-full"
+                    required>
+
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-4">
+
+                <input
+                    id="officerState"
+                    type="text"
+                    placeholder="State"
+                    class="border rounded-lg px-4 py-3 w-full"
+                    required>
+
+                <select
+                    id="officerStatus"
+                    class="border rounded-lg px-4 py-3 w-full">
+
+                    <option>Active</option>
+                    <option>On Leave</option>
+
+                </select>
+
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-4">
+
+                <input
+                    id="officerEmail"
+                    type="email"
+                    placeholder="Email"
+                    class="border rounded-lg px-4 py-3 w-full"
+                    required>
+
+                <input
+                    id="officerPhone"
+                    type="text"
+                    placeholder="Phone"
+                    class="border rounded-lg px-4 py-3 w-full"
+                    required>
+
+            </div>
+         <div>
+
+    <label class="block mb-2 font-medium">
+        Officer Photo
+    </label>
+
+    <input
+        id="officerImage"
+        type="file"
+        accept="image/*"
+        class="w-full border rounded-lg px-4 py-3">
+
+</div>
+            <button
+            id="saveOfficerBtn"
+                class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-xl">
+
+                Save Officer
+
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+<!-- ==========================
+Officer Profile Modal
+=========================== -->
+<div id="viewOfficerModal"
+    class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
+
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-4xl p-8 relative">
+
+        <!-- Close Button -->
+        <button
+            id="closeViewOfficer"
+            class="absolute top-5 right-6 text-3xl text-gray-500 hover:text-red-500">
+
+            &times;
+
+        </button>
+
+        <div id="officerProfile"></div>
+
+    </div>
+
+</div>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
+<script src="data.js"></script>
+<script src="dashboard.js"></script>
+<script src="sidebar.js"></script>
+<script src="chart.js"></script>
+<script src="filter.js"></script>
+<script src="map.js"></script>
+<script src="report.js"></script>
+<script src="officers.js"></script>
+<script src="officersData.js"></script>
+<script src="table.js"></script>
+<script src="utils.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

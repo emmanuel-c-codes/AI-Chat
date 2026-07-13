@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ECOMONITOR Government Admin</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+<style>
+body{
+    font-family:Arial,sans-serif;
+    background:#f5f7fa;
+}
+
+.sidebar{
+    width:270px;
+    transition:.3s;
+}
+
+.sidebar a{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    padding:14px 18px;
+    border-radius:12px;
+    transition:.3s;
+}
+
+.sidebar a:hover{
+    background:#166534;
+}
+
+.card{
+    transition:.3s;
+}
+
+.card:hover{
+    transform:translateY(-5px);
+}
+
+@media(max-width:1024px){
+
+.sidebar{
+    position:fixed;
+    left:-270px;
+    top:0;
+    height:100vh;
+    z-index:100;
+}
+
+.sidebar.show{
+    left:0;
+}
+
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="flex">
+
+<!-- Sidebar -->
+
+<aside id="sidebar" class="sidebar bg-green-700 text-white min-h-screen">
+
+<div class="p-6 border-b border-green-600">
+
+<h1 class="text-3xl font-black">
+
+ECOMONITOR
+
+</h1>
+
+<p class="text-green-200">
+
+Government Admin
+
+</p>
+
+</div>
+
+<nav class="p-5 space-y-2">
+
+<a href="#">
+<i class="fa-solid fa-chart-line"></i>
+Dashboard
+</a>
+
+<a href="#">
+<i class="fa-solid fa-users"></i>
+Citizens
+</a>
+
+<a href="#">
+<i class="fa-solid fa-file-lines"></i>
+Reports
+</a>
+
+<a href="#">
+<i class="fa-solid fa-map-location-dot"></i>
+Live Map
+</a>
+
+<a href="#">
+<i class="fa-solid fa-user-shield"></i>
+Officers
+</a>
+
+<a href="#">
+<i class="fa-solid fa-chart-column"></i>
+Analytics
+</a>
+
+<a href="#">
+<i class="fa-solid fa-bell"></i>
+Notifications
+</a>
+
+<a href="#">
+<i class="fa-solid fa-gear"></i>
+Settings
+</a>
+
+<a href="#" class="bg-red-600 hover:bg-red-700">
+<i class="fa-solid fa-right-from-bracket"></i>
+Logout
+</a>
+
+</nav>
+
+</aside>
+
+<!-- Main -->
+
+<div class="flex-1">
+
+<!-- Top Navbar -->
+
+<header class="bg-white shadow px-6 py-4 flex justify-between items-center">
+
+<div class="flex items-center gap-4">
+
+<button id="menuBtn" class="lg:hidden">
+
+<i class="fa-solid fa-bars text-2xl"></i>
+
+</button>
+
+<div>
+
+<h2 class="text-3xl font-bold">
+
+Government Dashboard
+
+</h2>
+
+<p class="text-gray-500">
+
+Environmental Monitoring System
+
+</p>
+
+</div>
+
+</div>
+
+<div class="flex items-center gap-5">
+
+<button class="relative">
+
+<i class="fa-solid fa-bell text-2xl"></i>
+
+<span class="absolute -top-2 -right-2 bg-red-600 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
+
+5
+
+</span>
+
+</button>
+
+<div class="flex items-center gap-3">
+
+<div class="w-12 h-12 rounded-full bg-green-700 text-white flex items-center justify-center">
+
+<i class="fa-solid fa-user"></i>
+
+</div>
+
+<div>
+
+<h4 class="font-bold">
+
+Administrator
+
+</h4>
+
+<p class="text-sm text-gray-500">
+
+Federal Ministry
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</header>
+
+<!-- Dashboard -->
+
+<main class="p-8">
+
+<h1 class="text-4xl font-black mb-8">
+
+Dashboard Overview
+
+</h1>
+
+<!-- Cards -->
+
+<div class="grid md:grid-cols-2 xl:grid-cols-4 gap-6">
+
+<div class="card bg-white rounded-2xl shadow p-6 border-l-4 border-green-700">
+
+<p class="text-gray-500">
+
+Registered Citizens
+
+</p>
+
+<h2 id="totalUsers" class="text-5xl font-black mt-3">
+
+0
+
+</h2>
+
+</div>
+
+<div class="card bg-white rounded-2xl shadow p-6 border-l-4 border-blue-600">
+
+<p class="text-gray-500">
+
+Reports
+
+</p>
+
+<h2 id="totalReports" class="text-5xl font-black mt-3">
+
+0
+
+</h2>
+
+</div>
+
+<div class="card bg-white rounded-2xl shadow p-6 border-l-4 border-yellow-500">
+
+<p class="text-gray-500">
+
+Pending
+
+</p>
+
+<h2 id="pendingReports" class="text-5xl font-black mt-3">
+
+0
+
+</h2>
+
+</div>
+
+<div class="card bg-white rounded-2xl shadow p-6 border-l-4 border-red-600">
+
+<p class="text-gray-500">
+
+Critical
+
+</p>
+
+<h2 id="criticalReports" class="text-5xl font-black mt-3">
+
+0
+
+</h2>
+
+</div>
+
+</div>
+
+<!-- Quick Actions -->
+
+<div class="mt-10">
+
+<h2 class="text-2xl font-bold mb-5">
+
+Quick Actions
+
+</h2>
+
+<div class="grid md:grid-cols-2 xl:grid-cols-4 gap-5">
+
+<button class="bg-green-700 text-white rounded-xl p-5">
+
+<i class="fa-solid fa-user-plus text-3xl mb-3"></i>
+
+<p>Add Citizen</p>
+
+</button>
+
+<button class="bg-blue-700 text-white rounded-xl p-5">
+
+<i class="fa-solid fa-file-circle-plus text-3xl mb-3"></i>
+
+<p>New Report</p>
+
+</button>
+
+<button class="bg-yellow-500 text-white rounded-xl p-5">
+
+<i class="fa-solid fa-user-shield text-3xl mb-3"></i>
+
+<p>Add Officer</p>
+
+</button>
+
+<button class="bg-purple-700 text-white rounded-xl p-5">
+
+<i class="fa-solid fa-chart-column text-3xl mb-3"></i>
+
+<p>View Analytics</p>
+
+</button>
+
+</div>
+
+</div>
+
+<!-- Recent Reports -->
+
+<div class="bg-white rounded-2xl shadow mt-10">
+
+<div class="p-6 border-b">
+
+<h2 class="text-2xl font-bold">
+
+Recent Reports
+
+</h2>
+
+</div>
+
+<div class="overflow-x-auto">
+
+<table class="w-full">
+
+<thead class="bg-gray-100">
+
+<tr>
+
+<th class="p-4 text-left">Citizen</th>
+
+<th class="p-4 text-left">Category</th>
+
+<th class="p-4 text-left">State</th>
+
+<th class="p-4 text-left">Status</th>
+
+<th class="p-4 text-left">Date</th>
+
+</tr>
+
+</thead>
+
+<tbody id="reportsTable">
+
+<tr>
+
+<td class="p-4" colspan="5">
+
+No reports available
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</main>
+
+</div>
+
+</div>
+
+<script type="module" src="dashboard.js"></script>
+<!-- const sidebar=document.getElementById("sidebar");
+const menuBtn=document.getElementById("menuBtn");
+
+
+menuBtn.onclick=()=>{
+
+sidebar.classList.toggle("show");
+
+};
+</script> -->
+
+</body>
+</html>

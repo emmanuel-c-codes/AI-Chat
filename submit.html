@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JobConnect</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script src="https://kit.fontawesome.com/your-kit.js" crossorigin="anonymous"></script>
+</head>
+
+<body class="bg-gray-100">
+
+  <!-- Navbar -->
+  <nav class="bg-white shadow-md fixed w-full z-50">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="flex justify-between items-center h-16">
+<img src="/Jobconnect/images/logo.png" class="w-30 h-10">
+        <ul class="hidden md:flex space-x-8">
+          <li><a href="#" class="hover:text-cyan-500">Home</a></li>
+          <li><a href="jobs.html" class="hover:text-cyan-500">Jobs</a></li>
+          <li><a href="#" class="hover:text-cyan-500">Companies</a></li>
+          <li><a href="#" class="hover:text-cyan-500">About</a></li>
+        </ul>
+
+        <div class="hidden md:flex gap-3">
+          <button class="px-4 py-2 border text-white rounded-lg bg-gradient-to-r from-cyan-500 to-emerald-500"><a href="login.html">Login</a>
+            
+          </button>
+
+          <button class="px-4 py-2 bg-gradient-to-r from-cyan-500 to-emerald-500 text-white rounded-lg"><a href="register.html"> Register</a>
+           
+          </button>
+        </div>
+
+        <button id="menu-btn" class="md:hidden text-3xl">
+          ☰
+        </button>
+
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden bg-white p-5 md:hidden">
+      <a href="#" class="block py-2">Home</a>
+      <a href="#" class="block py-2">Jobs</a>
+      <a href="#" class="block py-2">Companies</a>
+      <a href="#" class="block py-2">About</a>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <!-- <section class="pt-32 pb-20 bg-gradient-to-r from-cyan-500 to-emerald-500 text-white">
+  
+    <div class="max-w-7xl mx-auto px-6">
+
+      <div class="grid md:grid-cols-2 gap-10 items-center">
+
+        <div>
+          <h1 class="text-5xl font-bold mb-6">
+            Find Your Dream Job Today
+          </h1>
+
+          <p class="text-xl mb-8">
+            Connect with top employers and discover opportunities that match your skills.
+          </p>
+
+          <div class="flex flex-col md:flex-row gap-4">
+            <input
+              type="text"
+              placeholder="Search jobs..."
+              class="p-4 rounded-lg text-black w-full"
+            >
+
+            <button class="bg-orange-500 px-8 py-4 rounded-lg">
+              Search
+            </button>
+          </div>
+        </div>
+
+         <div class="">
+          <img
+            src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=900"
+            class="rounded-2xl shadow-lg"
+          >
+        </div>
+
+      </div>
+
+    </div>
+  </section> -->
+
+
+  <!-- Hero Section -->
+<section
+  class="relative min-h-screen bg-cover bg-center flex items-center"
+  style="background-image: url('https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=1600');"
+>
+  <!-- Dark Overlay -->
+  <div class="absolute inset-0 bg-black/60"></div>
+
+  <!-- Blue Gradient Overlay -->
+  <div class="absolute inset-0 bg-gradient-to-r from-blue-950/90 to-transparent"></div>
+
+  <!-- Content -->
+  <div class="relative z-10 max-w-7xl mx-auto px-6 w-full">
+    <div class="max-w-2xl bg-gradient-to-r from-cyan-500 to-emerald-500 bg-clip-text text-transparent">
+
+      <h1 class="text-5xl md:text-7xl font-bold leading-tight mb-6">
+        Find Your <br>
+        Dream Job Today
+      </h1>
+
+      <p class="text-xl md:text-2xl bg-gradient-to-r from-cyan-500 to-emerald-500 bg-clip-text text-transparent mb-10">
+        Connect with top employers and discover opportunities that match your skills.
+      </p>
+
+      <!-- Search Box -->
+      <div class="flex flex-col md:flex-row gap-4">
+
+        <div class="bg-white rounded-xl flex items-center px-5 py-4 flex-1">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-6 h-6 text-gray-400 mr-3"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M21 21l-4.35-4.35M11 18a7 7 0 100-14 7 7 0 000 14z"
+            />
+          </svg>
+
+          <input
+            type="text"
+            placeholder="Search jobs..."
+            class="w-full outline-none text-gray-700"
+          >
+        </div>
+
+        <button id="searchJobs"
+          class="bg-gradient-to-r from-cyan hover:bg-cyan-600 px-10 py-4 rounded-xl text-white font-semibold transition"
+        >
+          Search
+        </button>
+
+      </div>
+
+    </div>
+  </div>
+</section>
+
+ <!-- How It Works Section -->
+<section class="py-20 bg-white">
+  <div class="max-w-7xl mx-auto px-6">
+
+    <!-- Heading -->
+    <div class="text-center mb-16">
+      <h2 class="text-4xl bg-gradient-to-r from-cyan-500 to-emerald-500 bg-clip-text text-transparent font-bold text-gray-800">
+        How JobConnect Works
+      </h2>
+
+      <p class="bg-gradient-to-r from-cyan-500 to-emerald-500 bg-clip-text text-transparent mt-4 text-lg">
+        Find your dream job in three simple steps.
+      </p>
+    </div>
+
+    <!-- Steps -->
+    <div class="grid md:grid-cols-3 gap-10">
+
+      <!-- Step 1 -->
+       <a href="register.html">
+      <div class="bg-gray-50 p-8 rounded-2xl shadow-md text-center hover:shadow-xl transition">
+        <div class="w-20 h-20 mx-auto mb-6 rounded-full bg-cyan-100 flex items-center justify-center">
+          <span class="text-3xl">👤</span>
+        </div>
+
+        <h3 class="text-2xl bg-gradient-to-r from-cyan-500 to-emerald-500 bg-clip-text text-transparent font-semibold mb-4">
+          Create an Account
+        </h3>
+
+        <p class="bg-gradient-to-r from-cyan-500 to-emerald-500 bg-clip-text text-transparent">
+          Sign up as a job seeker or employer and create your professional profile.
+        </p>
+      </div>
+      </a>
+
+      <!-- Step 2 -->
+       <a href="jobs.html">
+      <div class="bg-gray-50 p-8 rounded-2xl shadow-md text-center hover:shadow-xl transition">
+        <div class="w-20 h-20 mx-auto mb-6 rounded-full bg-emerald-100 flex items-center justify-center">
+          <span class="text-3xl">🔍</span>
+        </div>
+
+        <h3 class="text-2xl bg-gradient-to-r from-cyan-500 to-emerald-500 bg-clip-text text-transparent font-semibold mb-4">
+          Search Jobs
+        </h3>
+
+        <p class="bg-gradient-to-r from-cyan-500 to-emerald-500 bg-clip-text text-transparent">
+          Browse thousands of job opportunities and filter them by skills and location.
+        </p>
+      </div>
+      </a>
+
+      <!-- Step 3 -->
+      <div class="bg-gray-50 p-8 rounded-2xl shadow-md text-center hover:shadow-xl transition">
+        <div class="w-20 h-20 mx-auto mb-6 rounded-full bg-orange-200 flex items-center justify-center">
+          <span class="text-3xl">🚀</span>
+        </div>
+
+        <h3 class="text-2xl bg-gradient-to-r from-cyan-500 to-emerald-500 bg-clip-text text-transparent font-semibold mb-4">
+          Get Hired
+        </h3>
+
+        <p class="bg-gradient-to-r from-cyan-500 to-emerald-500 bg-clip-text text-transparent">
+          Apply to jobs, connect with employers, and start your new career journey.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+  <!-- Statistics -->
+  <section class="py-12 bg-white">
+    <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-4 gap-6">
+
+      <div class="text-center">
+        <h2 class="font-bold text-4xl font-bold bg-gradient-to-r from-cyan-500 to-emerald-500 bg-clip-text text-transparent">10K+</h2>
+        <p>Jobs Available</p>
+      </div>
+
+      <div class="text-center">
+        <h2 class="text-4xl font-bold bg-gradient-to-r from-cyan-500 to-emerald-500 bg-clip-text text-transparent">500+</h2>
+        <p>Companies</p>
+      </div>
+
+      <div class="text-center">
+        <h2 class="text-4xl font-bold bg-gradient-to-r from-cyan-500 to-emerald-500 bg-clip-text text-transparent">20K+</h2>
+        <p>Job Seekers</p>
+      </div>
+
+      <div class="text-center">
+        <h2 class="text-4xl font-bold bg-gradient-to-r from-cyan-500 to-emerald-500 bg-clip-text text-transparent">95%</h2>
+        <p>Success Rate</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Featured Jobs -->
+  <section class="py-20">
+    <div class="max-w-7xl mx-auto px-6">
+
+      <h2 class="text-4xl  bg-gradient-to-r from-cyan-500 to-emerald-500 bg-clip-text text-transparent font-bold text-center mb-12">
+        Featured Jobs
+      </h2>
+
+      <div class="grid md:grid-cols-3 gap-8">
+
+        <div class="bg-white p-6 rounded-2xl shadow">
+          <h3 class="text-2xl bg-gradient-to-r from-cyan-500 to-emerald-500 rounded text-white font-bold ">
+            Frontend Developer
+          </h3>
+
+          <p class="text-gray-500 mt-2">
+            Tech Solutions Ltd
+          </p>
+
+          <p class="mt-4">
+            Lagos, Nigeria
+          </p>
+
+          <p class="mt-2 bg-gradient-to-r from-cyan-500 to-emerald-500 bg-clip-text text-transparent font-bold">
+            ₦500,000/month
+          </p>
+
+          <button class="mt-6 w-full bg-gradient-to-r from-cyan-500 to-emerald-500 text-white py-3 rounded-lg">
+            Apply Now
+          </button>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl shadow">
+          <h3 class="text-2xl  bg-gradient-to-r from-cyan-500 to-emerald-500 rounded text-white font-bold">
+            UI/UX Designer
+          </h3>
+
+          <p class="text-gray-500 mt-2">
+            Design Hub
+          </p>
+
+          <p class="mt-4">
+            Abuja, Nigeria
+          </p>
+
+          <p class="mt-2 bg-gradient-to-r from-cyan-500 to-emerald-500 bg-clip-text text-transparent font-bold">
+            ₦400,000/month
+          </p>
+
+          <button class="mt-6 w-full bg-gradient-to-r from-cyan-500 to-emerald-500 text-white py-3 rounded-lg">
+            Apply Now
+          </button>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl shadow">
+          <h3 class="text-2xl  bg-gradient-to-r from-cyan-500 to-emerald-500 rounded text-white font-bold">
+            Backend Developer
+          </h3>
+
+          <p class="text-gray-500 mt-2">
+            DevWorks
+          </p>
+
+          <p class="mt-4">
+            Remote
+          </p>
+
+          <p class="mt-2 bg-gradient-to-r from-cyan-500 to-emerald-500 bg-clip-text text-transparent font-bold">
+            ₦650,000/month
+          </p>
+
+          <button class="mt-6 w-full bg-gradient-to-r from-cyan-500 to-emerald-500 text-white py-3 rounded-lg">
+            Apply Now
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- How It Works
+  <section class="py-20 bg-gray-200">
+
+    <h2 class="text-4xl bg-gradient-to-r from-cyan-500 to-emerald-500 bg-clip-text text-transparent font-bold text-center mb-12">
+      How It Works
+    </h2>
+
+    <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-3 gap-8">
+
+      <div class="bg-white p-8 rounded-2xl text-center shadow">
+        <div class="text-5xl mb-4">📝</div>
+        <h3 class="text-2xl bg-gradient-to-r from-cyan-500 to-emerald-500 bg-clip-text text-transparent font-bold mb-3">
+          Create Account
+        </h3>
+        <p class="bg-gradient-to-r from-cyan-500 to-emerald-500 bg-clip-text text-transparent">
+          Register as an employer or job seeker.
+        </p>
+      </div>
+
+      <div class="bg-white p-8 rounded-2xl text-center shadow">
+        <div class="text-5xl mb-4">🔍</div>
+        <h3 class="text-2xl bg-gradient-to-r from-cyan-500 to-emerald-500 bg-clip-text text-transparent font-bold mb-3">
+          Find Jobs
+        </h3>
+        <p class="bg-gradient-to-r from-cyan-500 to-emerald-500 bg-clip-text text-transparent">
+          Search thousands of job opportunities.
+        </p>
+      </div>
+
+      <div class="bg-white p-8 rounded-2xl text-center shadow">
+        <div class="text-5xl mb-4">🚀</div>
+        <h3 class="text-2xl bg-gradient-to-r from-cyan-500 to-emerald-500 bg-clip-text text-transparent font-bold mb-3">
+          Get Hired
+        </h3>
+        <p class="bg-gradient-to-r from-cyan-500 to-emerald-500 bg-clip-text text-transparent">
+          Connect with employers and start your career.
+        </p>
+      </div>
+
+    </div>
+
+  </section>
+ -->
+  <!-- Testimonials -->
+  <section class="py-20">
+    <h2 class="text-4xl bg-gradient-to-r from-cyan-500 to-emerald-500 bg-clip-text text-transparent font-bold text-center mb-12">
+      Success Stories
+    </h2>
+
+    <div class="max-w-5xl mx-auto px-6 grid md:grid-cols-2 gap-8">
+
+      <div class="bg-white p-8 rounded-2xl shadow">
+        <p>
+          "JobConnect helped me find my dream job in just two weeks."
+        </p>
+      <div class="flex flex-row space-x-2 mt-3">
+        <img src="/Jobconnect/images/person-1.jpeg" class="w-20 h-20 rounded-full">
+        <h4 class="mt-4 font-bold">
+          — SUSAN SMITH
+        </h4>
+        </div>
+      </div>
+
+      <div class="bg-white p-8 rounded-2xl shadow">
+        <p>
+       "We recruited three developers within a month."
+        </p>
+        <div class="flex flex-row space-x-2 mt-3">
+          <img src="/Jobconnect/images/images.jpeg" class="w-20 h-20 rounded-full" >
+        <h4 class="mt-4 font-bold">
+          — Tosin Adebayo
+        </h4>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Newsletter -->
+  <section class="bg-gradient-to-r from-cyan-500 to-emerald-500 py-16 text-white text-center">
+    <h2 class="text-4xl font-bold mb-4">
+      Get Job Alerts
+    </h2>
+
+    <p class="mb-6">
+      Subscribe for the latest job opportunities.
+    </p>
+
+    <div class="flex justify-center flex-col md:flex-row gap-4 px-6">
+      <input
+        type="email"
+        placeholder="Enter your email"
+        class="p-4 rounded-lg text-black w-full md:w-96"
+      >
+
+      <button class="bg-orange-500 px-8 rounded-lg">
+        Subscribe
+      </button>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white py-10">
+    <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-8">
+
+      <div>
+        <h3 class="text-2xl font-bold mb-4">
+          JobConnect
+        </h3>
+        <p>
+          Connecting employers and job seekers.
+        </p>
+      </div>
+
+      <div>
+        <h4 class="font-bold mb-3">Company</h4>
+        <p>About</p>
+        <p>Careers</p>
+        <p>Contact</p>
+      </div>
+
+      <div>
+        <h4 class="font-bold mb-3">Jobs</h4>
+        <p>Browse Jobs</p>
+        <p>Companies</p>
+      </div>
+
+      <div>
+        <h4 class="font-bold mb-3">Support</h4>
+        <p>Help Center</p>
+        <p>Privacy Policy</p>
+      </div>
+
+    </div>
+
+    <div class="text-center mt-10 text-gray-400">
+      © 2026 JobConnect. All rights reserved.
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+
+</body>
+</html>

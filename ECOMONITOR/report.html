@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoMonitor | Pro Reporting System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Smooth Entrance Animation */
+        @keyframes popIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+        .animate-pop { animation: popIn 0.4s ease-out; }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen pb-20">
+
+    <div id="successModal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm hidden z-50 flex items-center justify-center p-6">
+        <div class="bg-white p-8 rounded-3xl shadow-2xl text-center max-w-sm animate-pop">
+            <div class="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl">✓</div>
+            <h3 class="text-xl font-bold">Report Received!</h3>
+            <p class="text-gray-600 mt-2 mb-6">Your contribution helps us keep the community clean and safe.</p>
+            <button onclick="closeModal()" class="w-full bg-slate-900 text-white py-3 rounded-xl font-bold hover:bg-slate-800 transition">Close</button>
+        </div>
+    </div>
+
+    <nav class="bg-white border-b sticky top-0 z-40">
+        <div class="max-w-4xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="font-black text-green-700 text-xl tracking-tighter">ECOMONITOR</a>
+            <a href="index.html" class="text-sm font-bold text-gray-500 hover:text-green-600 transition">← Back to Home</a>
+        </div>
+    </nav>
+
+    <main class="max-w-4xl mx-auto px-6 py-12">
+        <section class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100 mb-12">
+            <h2 class="text-3xl font-black text-slate-900 mb-2">Submit New Report</h2>
+            <p class="text-gray-500 mb-8">Provide precise details to help local authorities resolve the issue faster.</p>
+            <form id="reportForm" class="space-y-4">
+                <input type="text" id="location" required placeholder="📍 Street Address or Landmark" 
+                    class="w-full p-4 border-2 border-slate-100 rounded-xl focus:border-green-500 outline-none transition">
+                <textarea id="issue" required placeholder="📝 Describe the environmental issue..." 
+                    class="w-full p-4 border-2 border-slate-100 rounded-xl focus:border-green-500 outline-none transition h-32"></textarea>
+                <button type="submit" id="submitBtn" class="w-full bg-green-600 text-white py-4 rounded-xl font-bold hover:bg-green-700 active:scale-95 transition shadow-lg">
+                    Post to Community Feed
+                </button>
+            </form>
+        </section>
+
+        <section>
+            <h3 class="text-xl font-bold mb-6">Live Activity Feed</h3>
+            <div id="reportList" class="space-y-4"></div>
+        </section>
+    </main>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBFSIqcnP5U0CMjQZtIS3jK5VTVcHGLPRw",
+            projectId: "client-cc4df",
+            storageBucket: "client-cc4df.firebasestorage.app",
+            messagingSenderId: "600063857476",
+            appId: "1:600063857476:web:9abfe8219251f56e67fd11"
+        };
+
+        const db = getFirestore(initializeApp(firebaseConfig));
+        const form = document.getElementById('reportForm');
+        const list = document.getElementById('reportList');
+        const btn = document.getElementById('submitBtn');
+        const modal = document.getElementById('successModal');
+
+        // Form Submit
+        form.onsubmit = async (e) => {
+            e.preventDefault();
+            btn.disabled = true;
+            btn.innerText = "Processing...";
+            await addDoc(collection(db, "reports"), {
+                location: document.getElementById('location').value,
+                issue: document.getElementById('issue').value,
+                status: "Pending",
+                createdAt: serverTimestamp()
+            });
+            form.reset();
+            btn.disabled = false;
+            btn.innerText = "Post to Community Feed";
+            modal.classList.remove('hidden'); // Show Success Modal
+        };
+
+        window.closeModal = () => modal.classList.add('hidden');
+
+        // Real-time Feed with hover animations
+// Real-time Feed with color-coded status
+        onSnapshot(query(collection(db, "reports"), orderBy("createdAt", "desc")), (snap) => {
+            list.innerHTML = snap.docs.map(doc => {
+                const isResolved = doc.data().status === 'Resolved';
+                return `
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition duration-300 animate-pop">
+                    <div class="flex justify-between items-start mb-2">
+                        <h4 class="font-bold text-slate-800">📍 ${doc.data().location}</h4>
+                        <span class="text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full 
+                            ${isResolved ? 'bg-emerald-100 text-emerald-700' : 'bg-orange-100 text-orange-600'}">
+                            ${doc.data().status}
+                        </span>
+                    </div>
+                    <p class="text-gray-600 text-sm italic">"${doc.data().issue}"</p>
+                </div>
+            `}).join('');
+        });
+    </script>
+</body>
+</html>

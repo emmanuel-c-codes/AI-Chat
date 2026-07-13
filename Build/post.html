@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Post Item - Student Marketplace</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="logo">🎓 StudentMarket</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="post.html">Post Item</a>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="about.html">About</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <h2>Post an Item</h2>
+    <form id="postForm">
+      <input type="text" id="title" placeholder="Item Title" required>
+      <textarea id="description" placeholder="Description" required></textarea>
+      <input type="number" id="price" placeholder="Price ($)" required>
+      <select id="category">
+        <option>Textbooks</option>
+        <option>Gadgets</option>
+        <option>Tutoring</option>
+        <option>Others</option>
+      </select>
+      <input type="text" id="contact" placeholder="Contact Info" required>
+      <button type="submit">Post Item</button>
+    </form>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 StudentMarket | Built by Emmanuel</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Citizen Dashboard | EcoMonitor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans pb-20">
+
+    <header class="bg-white px-5 py-6 shadow-sm border-b border-slate-100 flex justify-between items-center">
+        <div>
+            <h1 class="text-2xl font-black text-[#092244] tracking-tight">EcoMonitor</h1>
+            <p class="text-xs text-slate-500 font-medium mt-1">Welcome back, <span id="userName">Citizen</span></p>
+        </div>
+        <a href="profile.html" class="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center border border-slate-200">
+            <svg class="w-5 h-5 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+        </a>
+    </header>
+
+    <main class="p-5 space-y-6">
+        <!-- Quick Actions Grid -->
+        <div class="grid grid-cols-2 gap-4">
+            <a href="urgent.html" class="bg-red-50 border border-red-100 p-4 rounded-2xl flex flex-col items-center justify-center gap-2 hover:bg-red-100 transition-colors">
+                <div class="w-12 h-12 bg-red-500 text-white rounded-full flex items-center justify-center shadow-sm">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                </div>
+                <span class="text-xs font-bold text-red-700">Report Incident</span>
+            </a>
+
+            <a href="recycle.html" class="bg-emerald-50 border border-emerald-100 p-4 rounded-2xl flex flex-col items-center justify-center gap-2 hover:bg-emerald-100 transition-colors">
+                <div class="w-12 h-12 bg-emerald-500 text-white rounded-full flex items-center justify-center shadow-sm">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                </div>
+                <span class="text-xs font-bold text-emerald-700">Recycle & Earn</span>
+            </a>
+        </div>
+
+        <!-- Corporate Upgrade Banner -->
+        <a href="compliance.html" class="block bg-gradient-to-r from-slate-900 to-[#092244] rounded-2xl p-5 text-white shadow-lg relative overflow-hidden">
+            <div class="relative z-10">
+                <span class="bg-purple-500/20 text-purple-300 text-[10px] font-black px-2 py-1 rounded uppercase tracking-wider border border-purple-500/30">For Businesses</span>
+                <h2 class="text-lg font-black mt-3 mb-1">Get Compliance Pro</h2>
+                <p class="text-xs text-slate-300 w-3/4">Obtain your government-approved digital waste clearance certificate.</p>
+            </div>
+            <svg class="w-24 h-24 text-white/5 absolute -right-4 -bottom-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+        </a>
+    </main>
+
+    <script type="module">
+        import { requireAuth } from './firebase.js';
+        
+        requireAuth((user) => {
+            // Update UI with user info if available
+            if(user.displayName) {
+                document.getElementById('userName').textContent = user.displayName;
+            }
+        });
+    </script>
+</body>
+</html>

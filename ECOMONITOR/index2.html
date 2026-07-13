@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoMonitor Nigeria | Community Action Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+</head>
+<body class="bg-white text-gray-900 overflow-x-hidden">
+
+    <!-- Navbar -->
+    <nav class="sticky top-0 z-50 bg-white/90 backdrop-blur-md flex justify-between items-center py-6 px-10 border-b">
+        <h1 class="text-2xl font-black text-green-700 tracking-tight">ECOMONITOR</h1>
+        <div class="space-x-8 font-medium">
+            <a href="#features" class="hover:text-green-600 transition">Features</a>
+            <a href="#mission" class="hover:text-green-600 transition">Mission</a>
+            <a href="report.html" class="bg-slate-900 text-white px-5 py-2 rounded-lg hover:bg-green-700 transition shadow-lg">Get Started</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="py-32 px-10 bg-slate-50 text-center">
+        <span data-aos="fade-up" class="text-green-600 font-bold uppercase tracking-widest text-sm">Now Live in Nigeria</span>
+        <h2 data-aos="fade-up" data-aos-delay="100" class="text-7xl font-extrabold mt-6 mb-8 max-w-4xl mx-auto leading-tight">Your Neighborhood, <br><span class="text-green-700">Protected by Data.</span></h2>
+        <p data-aos="fade-up" data-aos-delay="200" class="text-xl text-gray-600 max-w-2xl mx-auto mb-10">EcoMonitor empowers you to track environmental challenges in real-time. Join thousands of citizens making their streets cleaner, safer, and greener.</p>
+        <div data-aos="fade-up" data-aos-delay="300" class="flex justify-center gap-4">
+            <a href="report.html" class="bg-green-600 text-white px-10 py-4 rounded-xl font-bold text-lg hover:bg-green-700 transition hover:scale-105">Start Reporting</a>
+            <a href="#" class="bg-white border px-10 py-4 rounded-xl font-bold text-lg hover:bg-gray-50 transition">View Live Map</a>
+        </div>
+    </header>
+
+    <!-- How It Works Section (New Long-Form Addition) -->
+    <section class="py-24 px-10 max-w-6xl mx-auto">
+        <h2 data-aos="fade-down" class="text-4xl font-bold text-center mb-16">The Road to a Cleaner Nigeria</h2>
+        <div class="grid md:grid-cols-3 gap-10">
+            <div data-aos="zoom-in" class="text-center p-6"><div class="text-5xl mb-4 text-green-600">📍</div><h4 class="font-bold text-xl mb-2">Identify</h4><p class="text-gray-600">Spot environmental hazards in your local area.</p></div>
+            <div data-aos="zoom-in" data-aos-delay="100" class="text-center p-6"><div class="text-5xl mb-4 text-green-600">📸</div><h4 class="font-bold text-xl mb-2">Capture</h4><p class="text-gray-600">Upload a photo and brief description directly.</p></div>
+            <div data-aos="zoom-in" data-aos-delay="200" class="text-center p-6"><div class="text-5xl mb-4 text-green-600">🚀</div><h4 class="font-bold text-xl mb-2">Act</h4><p class="text-gray-600">Our team notifies authorities to ensure resolution.</p></div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-24 px-10 bg-slate-50">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+            <div data-aos="fade-right">
+                <h3 class="text-sm font-bold text-green-600 uppercase mb-4">Why EcoMonitor?</h3>
+                <h2 class="text-5xl font-bold mb-6">Real-time insight for local action.</h2>
+                <p class="text-lg text-gray-600 mb-8">Stop waiting for environmental issues to escalate. Our platform provides the infrastructure to crowdsource data, verify incidents, and hold stakeholders accountable.</p>
+                <div class="space-y-4">
+                    <div class="flex gap-4"><span>✅</span> <span>Automated incident notification</span></div>
+                    <div class="flex gap-4"><span>✅</span> <span>Geospatial hotspot mapping</span></div>
+                </div>
+            </div>
+            <div data-aos="fade-left" class="bg-gray-200 h-[500px] rounded-3xl flex items-center justify-center text-gray-500 font-bold shadow-2xl">Dashboard Preview</div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="bg-green-800 py-24 px-10 text-white text-center">
+        <div class="max-w-5xl mx-auto grid md:grid-cols-3 gap-10">
+            <div data-aos="flip-up"><p class="text-6xl font-black">500+</p><p class="mt-2 opacity-80 font-bold uppercase tracking-widest">Reports</p></div>
+            <div data-aos="flip-up" data-aos-delay="100"><p class="text-6xl font-black">12</p><p class="mt-2 opacity-80 font-bold uppercase tracking-widest">States</p></div>
+            <div data-aos="flip-up" data-aos-delay="200"><p class="text-6xl font-black">94%</p><p class="mt-2 opacity-80 font-bold uppercase tracking-widest">Resolution</p></div>
+        </div>
+    </section>
+
+    <!-- FAQ and CTA -->
+    <section class="py-24 px-10">
+        <div class="max-w-3xl mx-auto text-center" data-aos="fade-up">
+            <h2 class="text-4xl font-bold mb-16">Frequently Asked Questions</h2>
+            <div class="text-left space-y-8">
+                <div class="border-b pb-6"><h4 class="text-lg font-bold">Is EcoMonitor free?</h4><p class="text-gray-600">Yes, it is completely free for every citizen.</p></div>
+                <div class="border-b pb-6"><h4 class="text-lg font-bold">How are reports handled?</h4><p class="text-gray-600">Reports are verified and shared with local environmental agencies.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>AOS.init({ duration: 1000, once: true });</script>
+
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - SkillProof</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        html { scroll-behavior: smooth; }
+        
+        /* Restricts the animation to a subtle 20px slide for a cohesive look */
+        [data-aos="fade-up"] {
+            transform: translate3d(0, 20px, 0) !important;
+        }
+        [data-aos="fade-up"].aos-animate {
+            transform: translate3d(0, 0, 0) !important;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 overflow-x-hidden">
+
+    <nav class="sticky top-0 z-50 bg-white/70 backdrop-blur-md border-b border-gray-100 flex items-center justify-between px-4 md:px-8 py-4">
+        <div class="flex items-center gap-2">
+            <img src="https://api.iconify.design/lucide:shield-check.svg?color=%23059669" class="w-8 h-8">
+            <span class="font-bold text-lg md:text-xl text-emerald-600">SkillProof</span>
+        </div>
+        <div class="flex items-center gap-3 md:gap-6 text-xs md:text-sm font-medium text-gray-600">
+            <a href="index.html" class="hover:text-emerald-600 transition">Home</a>
+            <a href="login.html" class="hover:text-emerald-600 transition">Login</a>
+            <a href="#signup-section" class="bg-emerald-600 text-white px-3 md:px-4 py-2 rounded-lg hover:bg-emerald-700 transition">Sign Up</a>
+        </div>
+    </nav>
+
+    <main id="signup-section" class="flex flex-col items-center justify-center min-h-[80vh] px-4 py-12">
+        
+        <div class="w-full max-w-sm flex flex-col items-center" data-aos="fade-up">
+            
+            <div class="text-center mb-10">
+                <img src="https://api.iconify.design/lucide:shield-check.svg?color=%23059669" class="w-12 h-12 mx-auto mb-3">
+                <h1 class="text-2xl font-bold text-gray-900">Create your Account</h1>
+                <p class="text-gray-600">Start your career readiness journey</p>
+            </div>
+
+            <div class="bg-white p-6 md:p-8 rounded-xl shadow-lg border border-gray-100 w-full transition-all duration-300 hover:shadow-2xl">
+                
+                <div id="feedback" class="hidden text-sm p-3 rounded-lg mb-4 text-center font-medium"></div>
+
+                <form id="signupForm" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1"><i class="fa-regular fa-user mr-2 text-gray-400"></i>Full Name</label>
+                        <input type="text" id="name" required class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none transition">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1"><i class="fa-solid fa-envelope mr-2 text-gray-400"></i>Email</label>
+                        <input type="email" id="email" required placeholder="you@example.com" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none transition">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1"><i class="fa-solid fa-lock mr-2 text-gray-400"></i>Password</label>
+                        <input type="password" id="password" required placeholder="••••••••" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none transition">
+                    </div>
+                    <button type="submit" class="w-full bg-emerald-600 text-white py-2.5 rounded-lg font-semibold hover:bg-emerald-700 transition active:scale-[0.98]">Sign Up →</button>
+                </form>
+
+                <div class="relative my-6"><div class="absolute inset-0 flex items-center"><div class="w-full border-t border-gray-200"></div></div><div class="relative flex justify-center text-sm"><span class="bg-white px-2 text-gray-500">OR</span></div></div>
+
+                <button id="googleBtn" class="w-full border py-2.5 rounded-lg font-medium flex items-center justify-center gap-2 hover:bg-gray-50 transition">
+                    <svg class="w-5 h-5" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 6.58c1.59 0 3.02.55 4.14 1.62l3.12-3.12C17.46 3.07 14.97 2 12 2 7.7 2 3.99 4.47 2.18 7.07l3.66 2.83c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+                    Continue with Google
+                </button>
+                <p class="text-center text-sm text-gray-600 mt-6">Already a member? <a href="login.html" class="text-emerald-600 font-semibold hover:underline">Login</a></p>
+            </div>
+
+        </div>
+    </main>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ 
+            duration: 350, // fast, sleek entrance duration
+            once: true 
+        });
+    </script>
+    
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBFSIqcnP5U0CMjQZtIS3jK5VTVcHGLPRw",
+            authDomain: "client-cc4df.firebaseapp.com",
+            projectId: "client-cc4df",
+            storageBucket: "client-cc4df.firebasestorage.app",
+            messagingSenderId: "600063857476",
+            appId: "1:600063857476:web:9abfe8219251f56e67fd11",
+            measurementId: "G-MNM99NCKH9"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        const feedback = document.getElementById('feedback');
+        function showFeedback(message, isError = true) {
+            feedback.textContent = message;
+            feedback.className = `text-sm p-3 rounded-lg mb-4 text-center font-medium ${isError ? 'bg-red-100 text-red-700' : 'bg-emerald-100 text-emerald-700'}`;
+            feedback.classList.remove('hidden');
+        }
+
+        document.getElementById('signupForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            try {
+                await createUserWithEmailAndPassword(auth, email, password);
+                showFeedback("Account created successfully!", false);
+                setTimeout(() => window.location.href = "dashboard.html", 2000);
+            } catch (error) {
+                showFeedback("Error: " + error.message);
+            }
+        });
+
+        document.getElementById('googleBtn').addEventListener('click', async () => {
+            try {
+                await signInWithPopup(auth, new GoogleAuthProvider());
+                showFeedback("Signed in successfully!", false);
+                setTimeout(() => window.location.href = "dashboard.html", 2000);
+            } catch (error) {
+                showFeedback("Google sign-in failed.");
+            }
+        });
+    </script>
+</body>
+</html>

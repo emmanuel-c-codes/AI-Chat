@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compliance Pro | EcoMonitor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-slide-up { animation: slideInUp 0.4s ease-out forwards; }
+    </style>
+</head>
+<body class="bg-slate-50 pb-24">
+
+    <header class="bg-white px-5 pt-6 pb-4 sticky top-0 z-20 shadow-sm border-b border-slate-100 flex items-center gap-3">
+        <a href="dashboard.html" class="p-2 bg-slate-50 rounded-full hover:bg-slate-100 transition-colors">
+            <svg class="w-5 h-5 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+        </a>
+        <div>
+            <h1 class="text-xl font-black text-slate-800 uppercase tracking-wide">Compliance Pro</h1>
+            <p class="text-xs text-slate-400 font-medium">Estates & Corporate Businesses</p>
+        </div>
+    </header>
+
+    <main class="p-5" id="mainContent">
+        <div id="loadingState" class="py-20 text-center animate-pulse">
+            <div class="w-12 h-12 border-4 border-purple-200 border-t-purple-600 rounded-full animate-spin mx-auto mb-4"></div>
+            <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Verifying Status...</p>
+        </div>
+
+        <div id="premiumDashboard" class="hidden space-y-5 animate-slide-up">
+            <div class="bg-gradient-to-br from-purple-900 to-slate-900 rounded-2xl p-6 shadow-xl text-white">
+                <div class="flex justify-between items-start mb-4">
+                    <span class="bg-emerald-500/20 text-emerald-400 text-[10px] font-black px-2.5 py-1 rounded-full uppercase tracking-wider border border-emerald-500/30 flex items-center gap-1.5">
+                        <span class="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse"></span> Active
+                    </span>
+                    <svg class="w-6 h-6 text-purple-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                </div>
+                <h2 class="text-2xl font-black mb-1">Automated Clearance</h2>
+                <p class="text-xs text-purple-200/70 font-medium mb-6">Your environmental compliance is up to date.</p>
+                
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="bg-white/10 rounded-xl p-3 border border-white/10">
+                        <p class="text-[10px] uppercase text-purple-300 font-bold mb-1">Next Audit</p>
+                        <p class="text-sm font-black">Oct 14, 2026</p>
+                    </div>
+                    <div class="bg-white/10 rounded-xl p-3 border border-white/10">
+                        <p class="text-[10px] uppercase text-purple-300 font-bold mb-1">Waste Score</p>
+                        <p class="text-sm font-black text-emerald-400">94 / 100</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="text-sm font-black text-slate-800 uppercase tracking-wider mt-2">Premium Actions</h3>
+            <div class="grid grid-cols-2 gap-4">
+                <button class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm flex flex-col items-center justify-center gap-2 hover:border-purple-300 transition-colors active:scale-95">
+                    <div class="w-10 h-10 bg-purple-50 text-purple-600 rounded-full flex items-center justify-center mb-1">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    </div>
+                    <span class="text-[11px] font-bold text-slate-700">Download Cert</span>
+                </button>
+                <button class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm flex flex-col items-center justify-center gap-2 hover:border-purple-300 transition-colors active:scale-95">
+                    <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center mb-1">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                    </div>
+                    <span class="text-[11px] font-bold text-slate-700">Auto-Schedule</span>
+                </button>
+            </div>
+        </div>
+
+        <div id="paywall" class="hidden animate-slide-up">
+            <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm mb-6">
+                <div class="bg-slate-900 p-6 text-center">
+                    <svg class="w-12 h-12 text-purple-400 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                    <h2 class="text-xl font-black text-white uppercase tracking-wide">Pro Certification</h2>
+                    <p class="text-xs text-slate-400 mt-1">Unlock automated government compliance</p>
+                </div>
+                <div class="p-6">
+                    <div class="flex justify-center items-end gap-1 mb-6">
+                        <span class="text-3xl font-black text-slate-900">₦25,000</span>
+                        <span class="text-xs font-bold text-slate-400 mb-1.5">/year</span>
+                    </div>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-center gap-3 text-sm font-medium text-slate-600">
+                            <svg class="w-5 h-5 text-emerald-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Verified Digital Certificates
+                        </li>
+                        <li class="flex items-center gap-3 text-sm font-medium text-slate-600">
+                            <svg class="w-5 h-5 text-emerald-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Priority Waste Evacuation
+                        </li>
+                        <li class="flex items-center gap-3 text-sm font-medium text-slate-600">
+                            <svg class="w-5 h-5 text-emerald-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Monthly Audit Reports
+                        </li>
+                    </ul>
+                    <button id="payBtn" class="w-full bg-[#092244] hover:bg-slate-800 text-white font-bold text-sm py-4 rounded-xl flex items-center justify-center gap-2 transition-all shadow-lg active:scale-95">
+                        Secure Checkout
+                    </button>
+                    <p class="text-[10px] text-center text-slate-400 font-semibold mt-3">Secured by Paystack</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBFSIqcnP5U0CMjQZtIS3jK5VTVcHGLPRw",
+            authDomain: "client-cc4df.firebaseapp.com",
+            projectId: "client-cc4df",
+            storageBucket: "client-cc4df.firebasestorage.app",
+            messagingSenderId: "600063857476",
+            appId: "1:600063857476:web:9abfe8219251f56e67fd11"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        let currentUser = null;
+
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                currentUser = user;
+                checkComplianceStatus();
+            } else {
+                window.location.href = "login.html";
+            }
+        });
+
+        async function checkComplianceStatus() {
+            try {
+                const docRef = doc(db, "users", currentUser.uid);
+                const docSnap = await getDoc(docRef);
+                
+                document.getElementById('loadingState').classList.add('hidden');
+                
+                if (docSnap.exists() && docSnap.data().complianceActive === true) {
+                    document.getElementById('premiumDashboard').classList.remove('hidden');
+                } else {
+                    document.getElementById('paywall').classList.remove('hidden');
+                }
+            } catch (error) {
+                console.error("Error fetching status:", error);
+                alert("Could not load compliance status. Please check your connection.");
+            }
+        }
+
+        // Mock Payment Gateway Flow
+        document.getElementById('payBtn').addEventListener('click', async () => {
+            const btn = document.getElementById('payBtn');
+            btn.innerHTML = `<div class="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div> Processing...`;
+            btn.disabled = true;
+
+            // Simulate network/payment delay
+            setTimeout(async () => {
+                try {
+                    // Update user doc in Firestore to unlock premium
+                    await setDoc(doc(db, "users", currentUser.uid), {
+                        complianceActive: true
+                    }, { merge: true });
+
+                    // Swap UI views
+                    document.getElementById('paywall').classList.add('hidden');
+                    document.getElementById('premiumDashboard').classList.remove('hidden');
+                    
+                    alert("Payment successful! Welcome to Compliance Pro.");
+                } catch (error) {
+                    console.error("Payment update failed:", error);
+                    alert("Payment succeeded, but we couldn't update your dashboard. Contact support.");
+                    btn.innerHTML = `Secure Checkout`;
+                    btn.disabled = false;
+                }
+            }, 2000);
+        });
+    </script>
+</body>
+</html>

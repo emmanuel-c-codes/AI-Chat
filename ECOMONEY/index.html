@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoMonitor Nigeria | Environmental Accountability</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+</head>
+<body class="bg-white text-gray-900 font-sans antialiased">
+
+    <!-- Navigation -->
+    <nav class="flex justify-between items-center py-5 px-6 md:px-16 border-b bg-white sticky top-0 z-50 shadow-sm">
+        <h1 class="text-2xl font-black text-green-700 tracking-tighter">ECOMONITOR</h1>
+        <div class="hidden lg:flex space-x-10 font-medium text-gray-600">
+            <a href="#about" class="hover:text-green-700 transition">About</a>
+            <a href="#features" class="hover:text-green-700 transition">Features</a>
+            <a href="#impact" class="hover:text-green-700 transition">Impact</a>
+            <a href="#faq" class="hover:text-green-700 transition">FAQ</a>
+        </div>
+        <a href="report.html" class="bg-green-700 text-white px-6 py-2.5 rounded-full font-bold hover:bg-green-800 transition">Report an Issue</a>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative py-24 md:py-40 px-6 text-center text-white bg-cover bg-center flex flex-col items-center justify-center" 
+            style="background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=1600&q=80');">
+        <div class="max-w-4xl">
+            <span class="text-green-400 font-bold tracking-widest uppercase text-sm">Empowering Nigerian Communities</span>
+            <h2 class="text-5xl md:text-8xl font-black mt-4 mb-8 leading-[1]">Building Cleaner Streets, <span class="text-green-500">Together.</span></h2>
+            <p class="text-xl md:text-2xl text-gray-200 mb-10">EcoMonitor is the bridge between citizen observation and environmental action. Use our platform to map, report, and solve environmental hazards.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="report.html" class="bg-green-600 px-10 py-5 rounded-2xl font-bold text-lg hover:bg-green-500 transition">Join the Movement</a>
+                <button id="liveMap" class="bg-white/10 px-10 py-5 rounded-2xl font-bold text-lg hover:bg-white/20 transition">View Live Incidents</button>
+            </div>
+        </div>
+        <div id="map" class="hidden mt-12 h-96 w-full max-w-5xl rounded-3xl border-4 border-white/10 shadow-2xl"></div>
+    </header>
+
+    <!-- About Section -->
+    <section id="about" class="py-24 px-6 md:px-16 bg-slate-50">
+        <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
+            <div>
+                <h3 class="text-green-700 font-bold mb-4 uppercase text-sm">Why We Exist</h3>
+                <h2 class="text-4xl md:text-5xl font-bold mb-8">Data-Driven Accountability for a Sustainable Nigeria.</h2>
+                <p class="text-lg text-gray-600 mb-6">EcoMonitor captures real-time environmental data, providing a transparent record that empowers citizens and provides local authorities with clear, actionable insights.</p>
+            </div>
+            <div class="bg-green-800 p-10 rounded-3xl text-white">
+                <h4 class="text-2xl font-bold mb-6">Our Core Pillars</h4>
+                <ul class="space-y-6">
+                    <li class="flex gap-4"><span>✅</span> <div><strong>Radical Transparency:</strong> Every report is public and verified.</div></li>
+                    <li class="flex gap-4"><span>✅</span> <div><strong>Community-Led:</strong> You are the sensor for your neighborhood.</div></li>
+                    <li class="flex gap-4"><span>✅</span> <div><strong>Action Oriented:</strong> Direct pathways for government escalation.</div></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-24 px-6 md:px-16">
+        <h2 class="text-center text-4xl font-bold mb-20">Platform Capabilities</h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+            <div class="p-10 border border-gray-100 rounded-3xl hover:border-green-500 transition shadow-sm hover:shadow-xl">
+                <div class="text-4xl mb-6">🌍</div>
+                <h4 class="text-xl font-bold mb-3">Smart Geolocation</h4>
+                <p class="text-gray-500">Easily tag the exact location of waste or pollution issues for rapid response.</p>
+            </div>
+            <div class="p-10 border border-gray-100 rounded-3xl hover:border-green-500 transition shadow-sm hover:shadow-xl">
+                <div class="text-4xl mb-6">📡</div>
+                <h4 class="text-xl font-bold mb-3">Live Incident Tracking</h4>
+                <p class="text-gray-500">Follow the status of your reports from submission to final resolution.</p>
+            </div>
+            <div class="p-10 border border-gray-100 rounded-3xl hover:border-green-500 transition shadow-sm hover:shadow-xl">
+                <div class="text-4xl mb-6">🛡️</div>
+                <h4 class="text-xl font-bold mb-3">Evidence Vault</h4>
+                <p class="text-gray-500">Securely store photos and descriptions as official evidence for authorities.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Impact Section -->
+    <section id="impact" class="py-24 px-6 md:px-16 bg-green-700 text-white text-center">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-4xl font-bold mb-16">Real Impact, Real Numbers</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-12">
+                <div><h3 class="text-5xl font-black mb-2">1,200+</h3><p>Resolved Cases</p></div>
+                <div><h3 class="text-5xl font-black mb-2">35</h3><p>LGAs Engaged</p></div>
+                <div><h3 class="text-5xl font-black mb-2">98%</h3><p>Satisfaction</p></div>
+                <div><h3 class="text-5xl font-black mb-2">50k+</h3><p>Residents</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-24 px-6 md:px-16 bg-slate-50 text-center">
+        <h2 class="text-4xl font-bold mb-16">Community Voices</h2>
+        <div class="max-w-3xl mx-auto italic text-xl text-gray-700">
+            "EcoMonitor has been instrumental in keeping our neighborhood clean. It gives us a voice to hold authorities accountable."
+            <p class="mt-4 font-bold not-italic">— Citizen, Lagos State</p>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="py-24 px-6 md:px-16 max-w-4xl mx-auto">
+        <h2 class="text-4xl font-bold mb-16 text-center">Frequently Asked Questions</h2>
+        <div class="space-y-8">
+            <div><h4 class="font-bold text-lg">How is data verified?</h4><p class="text-gray-600">All reports undergo community verification and cross-referencing with local geo-data.</p></div>
+            <div><h4 class="font-bold text-lg">Who uses this data?</h4><p class="text-gray-600">The data is shared with local government waste management boards and environmental agencies.</p></div>
+        </div>
+    </section>
+
+    <footer class="bg-gray-900 text-gray-400 py-12 text-center text-sm">
+        <p>&copy; 2026 EcoMonitor Nigeria. All rights reserved.</p>
+    </footer>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        document.getElementById("liveMap").addEventListener("click", function(e) {
+            e.preventDefault();
+            const mapContainer = document.getElementById("map");
+            mapContainer.classList.toggle("hidden");
+            if (!mapContainer.classList.contains("hidden") && !mapContainer._leaflet_id) {
+                navigator.geolocation.getCurrentPosition(pos => {
+                    const map = L.map("map").setView([pos.coords.latitude, pos.coords.longitude], 13);
+                    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
+                });
+            }
+        });
+    </script>
+</body>
+</html>

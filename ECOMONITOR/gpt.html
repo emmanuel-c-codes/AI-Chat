@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoMonitor | Submit Report</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 p-6">
+    
+    <div id="successOverlay" class="hidden fixed inset-0 bg-slate-900/50 flex items-center justify-center z-50 p-4">
+        <div class="bg-white p-8 rounded-3xl shadow-2xl max-w-sm w-full text-center">
+            <div class="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+            </div>
+            <h2 class="text-xl font-black mb-2">Report Received!</h2>
+            <p class="text-gray-500 mb-6">Your contribution helps us keep the community clean and safe.</p>
+            <button onclick="location.reload()" class="w-full bg-slate-900 text-white py-3 rounded-xl font-bold">Close</button>
+        </div>
+    </div>
+
+    <main class="max-w-2xl mx-auto bg-white p-8 rounded-3xl shadow-lg">
+        <h2 class="text-2xl font-black mb-6">Submit Environmental Report</h2>
+        <form id="reportForm" class="space-y-4">
+            <input type="text" id="location" required placeholder="Location" class="w-full p-4 border rounded-xl">
+            <select id="category" class="w-full p-4 border rounded-xl">
+                <option value="Waste">♻️ Waste</option>
+                <option value="Flooding">🌊 Flooding</option>
+                <option value="Sewage">🚰 Sewage</option>
+                <option value="Air Pollution">💨 Air Pollution</option>
+            </select>
+            <textarea id="issue" required placeholder="Describe issue" class="w-full p-4 border rounded-xl h-32"></textarea>
+            <input type="file" id="imageFile" accept="image/*" class="w-full p-2 border rounded-xl">
+            
+            <button type="button" onclick="getLocation()" class="text-green-600 font-bold text-sm hover:underline">📍 Use My GPS Location</button>
+            <input type="hidden" id="lat">
+            <input type="hidden" id="lng">
+            
+            <button type="submit" id="submitBtn" class="w-full bg-green-600 text-white py-4 rounded-xl font-bold hover:bg-green-700 transition">Submit Report</button>
+        </form>
+    </main>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBFSIqcnP5U0CMjQZtIS3jK5VTVcHGLPRw",
+            projectId: "client-cc4df",
+            storageBucket: "client-cc4df.firebasestorage.app",
+            messagingSenderId: "600063857476",
+            appId: "1:600063857476:web:9abfe8219251f56e67fd11"
+        };
+        const db = getFirestore(initializeApp(firebaseConfig));
+        const IMGBB_API_KEY = "c92716e18fa6b65e124fac58dbfc6751";
+
+        window.getLocation = () => {
+            navigator.geolocation.getCurrentPosition((p) => {
+                document.getElementById('lat').value = p.coords.latitude;
+                document.getElementById('lng').value = p.coords.longitude;
+                // Removed alert here too for cleaner UX
+            });
+        };
+
+        document.getElementById('reportForm').onsubmit = async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('submitBtn');
+            btn.innerText = "Processing...";
+            btn.disabled = true;
+
+            let imageUrl = "";
+            const file = document.getElementById('imageFile').files[0];
+
+            if (file) {
+                const formData = new FormData();
+                formData.append("image", file);
+                const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
+                    method: "POST",
+                    body: formData
+                });
+                const data = await res.json();
+                imageUrl = data.data.url;
+            }
+
+            await addDoc(collection(db, "reports"), {
+                location: document.getElementById('location').value,
+                issue: document.getElementById('issue').value,
+                category: document.getElementById('category').value,
+                image: imageUrl,
+                lat: document.getElementById('lat').value,
+                lng: document.getElementById('lng').value,
+                status: "Pending",
+                createdAt: serverTimestamp()
+            });
+
+            // Show the overlay instead of alert
+            document.getElementById('successOverlay').classList.remove('hidden');
+        };
+    </script>
+</body>
+</html>
